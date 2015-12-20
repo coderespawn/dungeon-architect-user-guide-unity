@@ -1,5 +1,5 @@
-Marker Emitters
-===============
+Marker Emitter Scripts
+======================
 
 Marker Emitters are behavior scripts that lets you emit your own markers anywhere in the map
 
@@ -62,9 +62,6 @@ In this example, we'd like to decorate the area outside the dungeon layout that 
 
 ![Theme to decorate the markers created by the emitter script](../assets/images/marker_emitter_03.jpg)
 
-This emitter emits a marker named `LowestPoint`, at the lowest Y point of the dungeon with the appropriate scale, which we can decorate with any object in the theme file
-
-![](../assets/images/marker_emitter_03.jpg)
 
 
 Example #2
@@ -75,6 +72,8 @@ Sometimes, it's useful to find the lowest point of the dungeon, so a large plane
 The `MarkerEmitterFindLowestPoint` lets you do just that
 
 ![An acid plane created at the bottom of the dungeon](../assets/images/marker_emitter_04.jpg)
+
+This emitter emits a marker named `LowestPoint`, at the lowest Y point of the dungeon with the appropriate scale, which we can decorate with any object in the theme file
 
 ![Node to attach a plane mesh to this marker](../assets/images/marker_emitter_05.png)
 
