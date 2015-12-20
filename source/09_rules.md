@@ -215,9 +215,9 @@ public class RandomCliffTransformRule : TransformationRule {
 	}
 }
 
-A similar rule is applied to trees to randomly rotate them along the Y-axis and randomly scale them slightly
-
 ```
+
+A similar rule is applied to trees to randomly rotate them along the Y-axis and randomly scale them slightly
 
 
 ###Example #2
