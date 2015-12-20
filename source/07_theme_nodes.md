@@ -8,7 +8,7 @@ A Theme can have 3 category of nodes
 * **Marker Emitter Nodes**
 
 
-![Theme Node categories](../assets/images/node_categories.jpg)
+![Theme Node categories](../assets/images/node_types.png)
 
 
 Marker Nodes
@@ -17,7 +17,7 @@ After the layout generation phase, the scene would be scattered with invisible n
 
 For e.g., if you have a marker node named `Ground`,  it would be invoked for every `Ground` marker found in the scene.  Once invoked, the theming engine executes all the nodes defined below it from left to right untill a certain condition is met
 
-![Ground Marker Node](../assets/images/marker_nodes_01.png)
+![Ground Node](../assets/images/ground_node.png)
 
 In the above example:
 
@@ -34,52 +34,38 @@ Names of custom marker nodes can be changed by double clicking on them, or from 
 
 ###Creating marker nodes
 
-There are several ways to create a new marker node:
+To create a marker node, right click anywhere in the empty area and choose **Add Marker Node**
 
-Right click anywhere in the empty area and expand the `Dungeon` category and click **Add Marker Node**
-![Add new marker node from Context Menu](../assets/images/marker_create_01.png)
-
-Alternatively, these context menu actions are also visible in the Actions tab. Drag and drop the **Add Marker Node** action into any empty area in the graph
-![Add new marker node from Actions Tab](../assets/images/marker_create_02.png)
+![Add new marker node from the Context Menu](../assets/images/create_node_marker.png)
 
 
 Visual Nodes
 ------------
-Visual nodes are used for spawning actors into the scene (e.g. meshes, lights, particle systems, blueprints etc).   They are usually attached to a marker node and executed whenever an marker with that name is encountered in the scene.   When executed, it spawns an actor defined within it and places it in the scene where the marker was encountered
+Visual nodes are used for spawning visual objects into the scene (e.g. any game objects, sprites etc).   They are usually attached to a marker node and executed whenever an marker with that name is encountered in the scene.   When executed, it spawns a game object defined within it and places it in the scene where the marker was encountered
 
 You can create the following visual nodes:
 
-* **Mesh Node** - Good for spawning static meshes.
-* **Point Light Node** - Spawns point lights anywhere in your dungeon
-* **Spot Light Node** - Spawns spot lights
-* **Particle  Node** - Spawns particle systems
-* **Actor Node** - Spawn any type of actor by specifying it's class
-
-
-If you have the Dungeon Architect Paper2D extension installed, then you can spawn additional visual nodes
-
-* **Paper Sprite Node** - Good for spawning individual sprites
-* **Paper Flipbook Node** - Spawn animated sprites
-* **Paper Tile Node** - Spawn tiles extracted from a Paper2D tilemap.  The editor gives you a user-friendly UI to select the tile from the tilemap
-
+* **Game Object Node** - Spawns any type of a game object.  Expects a game object template (e.g. prefabs)
+* **Sprite Node** - Spawns a sprite for your 2D games.   Expects a sprite reference.  Also have sprite specific properties
 
 ###Creating visual nodes
 
 There are several ways to create a new visual node:
 
-Drag a link out of the marker node you intend to attach it on and select the appropriate visual node you desire
-![Drag a link from existing marker nodes](../assets/images/create_visual_node_01.png)
+Drag and drop a game object from the *Project* window on to the theme editor to create a Game Object or Sprite node
 
-![Choose a Visual Node from the filtered list](../assets/images/create_visual_node_02.png)
+![Drag an drop prefabs into the theme editor](../assets/images/drag_drop_go.png)
+
+Alternatively, drag a link out of the marker node you intend to attach it on and select the appropriate visual node you desire
+
+![Drag a link from existing marker nodes](../assets/images/create_node_menu_1.png)
+
+![This would create an empty visual node](../assets/images/create_node_menu_2.png)
 
 
-Alternatively, right click anywhere in the empty area and expand the `Dungeon` category and choose a visual node to create
+Then select the node and assign the game object template from the inspector window
 
-![Choose a Visual Node from the context menu](../assets/images/create_visual_node_03.png)
-
-Alternatively, these context menu actions are also visible in the Actions tab. Drag and drop visual node action into any empty area in the graph
-![Add new visual node from Actions Tab](../assets/images/create_visual_node_04.png)
-
+![This would create an empty visual node](../assets/images/node_properties_visual_template.png)
 
 
 Marker Emitter Nodes
@@ -88,14 +74,18 @@ Marker Emitters emit new markers into the scene.  These nodes are attached to vi
 
 **Marker Emitter** nodes are similar in apperarance to Marker Nodes.  However, they are purple in color and have an input pin, instead of an output pin
 
-![Sample theme file](../assets/images/theme_file_example2.jpg)
+![Marker Emitter Sample](../assets/images/marker_emitter_sample.png)
 
 
 In the above example,  the `Wall` Marker has 3 Mesh nodes attached to it with probability such that any one for the 3 would be randomly chosen.   
-One of the 3 meshes has a window in it and we would like to decorate that mesh with curtains, but only if that node is selected.    So, we define a new Marker named `Window` (can be any name) and attach curtain meshes to it.
-Then we **emit** a Window Marker Node from the desired visual node.   Hence, if the mesh in the middle is executed, it would also insert a marker named *Window* in its position.   Then the theming engine would execute everything beneath the `Window` marker and pick a random curtain and attach to the wall
+One of the 3 meshes has a window in it and we would like to decorate that mesh with curtains, but only if that node is selected.    So, we define a new Marker named `Curtains` (can be any name) and attach curtain meshes to it.
+Then we **emit** a `Curtain` Marker Node from the desired visual node.   Hence, if the mesh in the middle is executed, it would also insert a marker named *Curtain* in its position.   Then the theming engine would execute everything beneath the `Curtain` marker and pick a random curtain and attach to the wall
+
+![Sample Dungeon Scene](../assets/images/marker_emitter_scene.jpg)
+
 
 This ability of defining your own hierarchy lets you design powerful themes for your levels
+
 
 
 ###Creating marker emitter nodes
@@ -108,13 +98,11 @@ Alternatively, right click anywhere in the empty area and expand the `Marker Emi
 
 ![Choose a Marker to emit from the context menu](../assets/images/create_marker_emitter_02.png)
 
-Alternatively, these context menu actions are also visible in the Actions tab. Drag and drop visual node action into any empty area in the graph
-
-![Choose a Marker to emit from the Actions tab](../assets/images/create_marker_emitter_03.png)
+You can create a marker emitter for any of the existing markers in the scene
 
 ###Cycles
 
-Cycles are not allowed when you emit markers as it doesn't make sense to continuously emit markers in an infinite loop
+Cycles are not allowed when you emit markers since we do not want to continuously emit markers in an infinite loop
 
 The editor takes care of not allowing cycles and notifies you with a user-friendly message when you attempt to create a connection with a marker emitter that might cause a loop
 
