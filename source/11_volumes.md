@@ -3,42 +3,51 @@
 
 Dungeon Architect provides various volumes to help you influence your dungeon as per your requirements.
 
+You can find the various volume prefabs under `Assets/DungeonArchtitect/Prefabs`
+
+![Platform Volume Prefab](../assets/images/asset_prefab.png)
+
 Platform Volume
 ---------------
 
-Place a platform volume anywhere in the scene and Dungeon Architect would adjust the dungeon layout and create a platform (room or corridor) at that location.  Scale the volume along the XY plane to change the size of the generated platform.   You can move the platform volume with the move tool to the desired location. (Rotation is not supported)
+Place a platform volume anywhere in the scene and Dungeon Architect would adjust the dungeon layout and create a platform (room or corridor) at that location.  Scale the volume along the XZ plane to change the size of the generated platform.   You can move the platform volume with the move tool to the desired location. (Rotation is not supported)
 
 This gives you artistic control and lets you manipulate the dungeon to suit your needs
 
-Here is an example of a user generated layout using volumes leading up to a boss fight
+To place a platform volume,  navigate to `Assets/DungeonArchtitect/Prefabs`
 
-![User defined dungeon layout](../assets/images/vol_platform_01.jpg)
+![Platform Volume Prefab](../assets/images/volume_platform.png)
 
-To place a platform volume,  go to Volumes tab and drag and drop it into the scene
+Drag and drop the Platform Volume Prefab into the scene view
 
-![Place a platform volume into the scene](../assets/images/vol_platform_02.jpg)
-
+![Platform Volume Prefab](../assets/images/pv01.jpg)
 
 Select the platform volume and have a look at it's properties
 
-![Platform Volume Properties](../assets/images/vol_platform_03.jpg)
+![Platform Volume Properties](../assets/images/pv_prop.png)
 
-The Volume needs to know which dungeon the volume belongs to (DA Supports mulitple dungeons within the same scene). Select the dungeon you have in your scene.
+The Volume needs to know which dungeon the volume belongs to (DA Supports mulitple dungeons within the same scene). 
 
-Relatime Update flag updates the dungeon as you move/scale the platform volume, giving you interactive feedback.  Uncheck if you face performance issues (Or, build the dungeon over multiple frames without stalling the UI by setting the Dungeon actor config propery's field *MaxBuildTimePerFrameMs* to around 20 to 30)
+Assign the dungeon you'd like this volume to affect in the **Dungeon** field
 
+Select the type of cell to create on this platform's location (Room or Corridor)
 
-An example of a corridor segment created using a platform volume.  Notice how the platform nicely blends with the existing geometry if it comes in contact with it
+Corridors form isolated platforms in the dungeon which merge nicely with existing corridor cells
 
-![Platform Volume Example](../assets/images/vol_platform_04a.jpg)
-![Platform Volume Example](../assets/images/vol_platform_04b.jpg)
-![Platform Volume Example](../assets/images/vol_platform_04c.jpg)
-![Platform Volume Example](../assets/images/vol_platform_04d.jpg)
+![Corridor platform](../assets/images/pv02.jpg)
+
+![Merges nicely with existing procedural layout](../assets/images/pv03.jpg)
+
+![Volume moved up along the Y-axis](../assets/images/pv04.jpg)
+
+![Volume moved down along the Y-axis](../assets/images/pv05.jpg)
 
 
 Rooms always connect to atleast one other room in the dungeon.  Changing the Cell type to *Room* creates this result
 
-![Room creation using a Platform Volume](../assets/images/vol_platform_05.jpg)
+![Room platform](../assets/images/pv06.jpg)
+
+A button to rebuild the dungeon is provided for convenience.  It rebuilds the dungeon in the scene
 
 
 Theme Override Volume
@@ -47,60 +56,37 @@ Give certain areas of you dungeons a different look and feel.   Layout inside th
 
 This is useful for adding variations to your level
 
+![Sample Dungeon](../assets/images/tov_01.jpg)
 
-![Hell Forge Theme](../assets/images/vol_theme_01.jpg)
+![Selective areas overriden by Theme Override Volumes](../assets/images/tov_02.jpg)
 
-![A different theme applied to this section](../assets/images/vol_theme_02.jpg)
+![Geometry within the volume picks up the theme defined by the volume](../assets/images/tov_03.jpg)
 
-![Layout within the volume picks up the theme overridden by the volume](../assets/images/vol_theme_03.jpg)
+Select the theme override volume and have a look at it's properties
 
-![Theme Override Volume Properties](../assets/images/vol_theme_04.png)
+![Theme Override Volume Properties](../assets/images/tov_prop.png)
 
-The **Reversed** flag, if checked, overrides the theme of everything outside of the volume (as opposed to inside)
+**Dungeon**: Set the dungeon game object this volume should affect
 
-**Realtime Update** updates the dungeon as it is moved or scaled giving your immediate visual feedback
+**Override Theme**: Set the dungeon theme asset you would like to apply to the geometry within this volume
 
 Note: When overriding, the themes needs to be designed for the same grid cell size for proper results
+
+A button to rebuild the dungeon is provided for convenience.  It rebuilds the dungeon in the scene
+
 
 Negation Volume
 ---------------
 This volume removes all procedural geometry inside of this volume.  Use this to get rid of procedural geometry in areas you do not need or when it is getting in the way while manually painting your layout
 
-![Theme Override Volume Properties](../assets/images/vol_negation_01.jpg)
-![Theme Override Volume Properties](../assets/images/vol_negation_02.jpg)
+![Procedural geometry we'd like to remove](../assets/images/nv_01.jpg)
 
-![Drag and drop a Negation Volume](../assets/images/create_volume_negation.png)
+![Geometry inside the volume removed after a rebuild](../assets/images/nv_02.jpg)
 
-![Negation Volume Properties](../assets/images/vol_negation_properties.png)
+Select the negation volume and have a look at it's properties
 
-The **Reversed** flag, if checked, removes all the procedural layout outside of the volume (as opposed to inside)
+![Geometry inside the volume removed after a rebuild](../assets/images/nv_prop.png)
 
-**Realtime Update** updates the dungeon as it is moved or scaled giving your immediate visual feedback
+**Dungeon**: Set the dungeon game object this volume should affect
 
-
-Mirror Volume
--------------
-Mirror Volumes lets you create symmetric dungeon by mirroring the layout of a dungeon
-
-![Dungeon Mirrored along the X-axis](../assets/images/vol_mirror_01.jpg)
-
-![Dungeon Mirrored along both the X and Y-axis](../assets/images/vol_mirror_02.jpg)
-
-This is useful when you need symmetry in your maps (e.g. strategy games)
-
-To create a Mirror Volume, drag it from the volumes tab:
-
-![Drag and drop a Mirror volume from the Volumes tab](../assets/images/vol_mirror_03.jpg)
-
-
-Place the volume where you would like to have the layout mirrored.  The mirroring would happen along the local X-axis of the volume.  You can rotate the volume in steps of 90 degrees (0, 90, 180, 270) to mirror in different directions
-
-Multiple mirrors can also be placed within the same dungeon
-
-Example of procedural maps created for a 2-player twin stick RTS game
-![](../assets/images/vol_mirror_eg_1.jpg)
-![](../assets/images/vol_mirror_eg_2.jpg)
-![](../assets/images/vol_mirror_eg_3.jpg)
-![](../assets/images/vol_mirror_eg_4.jpg)
-![](../assets/images/vol_mirror_eg_5.jpg)
-
+A button to rebuild the dungeon is provided for convenience.  It rebuilds the dungeon in the scene
