@@ -120,12 +120,12 @@ public class NonViewBlockingSelectionRule : SelectorRule {
 
 In this example the towers are too crowded and close to each other.    
 
-![Towers are too close to each other](../assets/images/selection_eg3_1.png)
+![Towers are too close to each other](../assets/images/selection_eg3_1.jpg)
 
 
 A selector rule is created to select alternate cells
 
-![Select alternate cells](../assets/images/selection_eg3_2.png)
+![Select alternate cells](../assets/images/selection_eg3_2.jpg)
 
 ![Rule assignment](../assets/images/selection_eg3_3.png)
 
