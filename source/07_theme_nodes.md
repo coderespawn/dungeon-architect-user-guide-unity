@@ -106,5 +106,5 @@ Cycles are not allowed when you emit markers since we do not want to continuousl
 
 The editor takes care of not allowing cycles and notifies you with a user-friendly message when you attempt to create a connection with a marker emitter that might cause a loop
 
-![Cycles not allowed](../assets/images/marker_node_cycle.jpg)
+![Cycles not allowed](../assets/images/cycles.png)
 
