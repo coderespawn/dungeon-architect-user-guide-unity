@@ -227,6 +227,14 @@ $(document).ready(function() {
 <li><a href="#example-2-2">Example #2</a></li>
 <li><a href="#example-3-2">Example #3</a></li>
 </ul></li>
+<li><a href="#navigation-mesh">Navigation Mesh</a><ul>
+<li><a href="#setup">Setup</a></li>
+<li><a href="#theme-influence">Theme Influence</a></li>
+<li><a href="#config">Config</a></li>
+<li><a href="#triangle-providers">Triangle Providers</a></li>
+<li><a href="#navigation-agent">Navigation Agent</a></li>
+</ul></li>
+<li><a href="#d-support">2D Support</a></li>
 <li><a href="#dungeon-builders">Dungeon Builders</a><ul>
 <li><a href="#creating-a-new-builder">Creating a new Builder</a></li>
 <li><a href="#using-a-different-builder">Using a different Builder</a></li>
@@ -1045,6 +1053,129 @@ public class MyAwesomeEmitter : DungeonMarkerEmitter
 <p class="caption">Theme to add the decorative sprites</p>
 </div>
 <p>All the <code>Corner_*</code> markers seen in the theme file above were emitted by the marker emitter script</p>
+<h1 id="navigation-mesh">Navigation Mesh</h1>
+<p>Dungeon Architect supports runtime navigation mesh generation, which is not supported in Unity 5 yet. This is necessary for moving your NPCs intelligently across your procedurally generated level</p>
+<div class="figure">
+<img src="../assets/images/navigation_01.jpg" alt="Navigation" />
+<p class="caption">Navigation</p>
+</div>
+<p>This is based on the Recast Navigation library, so it provides very high quality results.</p>
+<h2 id="setup">Setup</h2>
+<p>To build a navigation mesh during runtime, place the DungeonNavigation prefab on to your scene</p>
+<div class="figure">
+<img src="../assets/images/navigation_02.png" alt="Navigation Prefab" />
+<p class="caption">Navigation Prefab</p>
+</div>
+<p>Select the game object you just placed and have a look at the inspector window</p>
+<div class="figure">
+<img src="../assets/images/navigation_03.png" alt="Navigation Properties" />
+<p class="caption">Navigation Properties</p>
+</div>
+<p>To build the nav mesh, input geometry for walkable and blocked areas needs to be provided. This is done by <code>Triangle Providers</code></p>
+<p>There are two types of triangle providers already attached to the navigation object</p>
+<ul>
+<li><strong>Collision Triagle Provider</strong>: Uses the collision mesh of the colliders present in the scene to build the navigation mesh</li>
+<li><strong>Layout Floor Triangle Provider</strong>: This provides the floor layout of a dungeon as walkable area to the navigation mesh input</li>
+</ul>
+<p>Assign the dungeon reference you would like to use</p>
+<div class="figure">
+<img src="../assets/images/navigation_04.png" alt="Navigation Triangle Provider" />
+<p class="caption">Navigation Triangle Provider</p>
+</div>
+<p>Click Build</p>
+<div class="figure">
+<img src="../assets/images/navigation_05.png" alt="Navigation Properties" />
+<p class="caption">Navigation Properties</p>
+</div>
+<h2 id="theme-influence">Theme Influence</h2>
+<p>The dungeon objects (meshes, prefabs etc) do not affect the navigation by default. You need to set the <strong>Affects Navigation</strong> flag of the visual node to make it affect the navigation.</p>
+<div class="figure">
+<img src="../assets/images/navigation_08.png" alt="Influence Navigation from Theme Graph" />
+<p class="caption">Influence Navigation from Theme Graph</p>
+</div>
+<p>The object also has to be static in order to affect the navigation. So the <strong>Is Static</strong> flag also needs to be set.</p>
+<p>Important: You should set the <em>Affects Navigation</em> flag only when it is absolutly required to maintain a good nav mesh generation speed while building</p>
+<h2 id="config">Config</h2>
+<div class="figure">
+<img src="../assets/images/navigation_05.png" alt="Navigation Generation Config" />
+<p class="caption">Navigation Generation Config</p>
+</div>
+<ul>
+<li><strong>Cell Size</strong>: Controls the mesh generation accuracy vs speed. It determines the resolution of the generated nav mesh. Lowering this number will generate nicer edges and a more accurate navmesh but requires more procesing power and slower. A good value is between 0.2 to 0.3</li>
+<li><strong>Agent Height</strong>: The max height of the agents in your game</li>
+<li><strong>Agent Radius</strong>: The max radius of the agents in your game</li>
+<li><strong>Agent Climb Height</strong>: The max height an agent can climb on. Objects with height lower than this will not be considered obstacles, as the agent would be able to climb over them</li>
+<li><strong>Max Crowd Agents</strong>: The max no. of agents that can be present in the game at a time.</li>
+</ul>
+<h2 id="triangle-providers">Triangle Providers</h2>
+<p>To generate a navigation mesh, the nav mesh system requires input triangles so it can build a world and generate the nav mesh. Dungeon Architect comes with various triangle providers to help you affect the nav mesh in various ways. We have seen two of them already above</p>
+<div class="figure">
+<img src="../assets/images/navigation_06.png" alt="Navigation Mesh Triangle Providers" />
+<p class="caption">Navigation Mesh Triangle Providers</p>
+</div>
+<ul>
+<li><strong>StaticMeshTriangleProvider</strong>: Uses the mesh geometry (vertices, indices) for all the meshes defined in the prefab as a source for the input triangles to generate the nav mesh. This is usually slower but creates detailed results</li>
+<li><strong>CollisionTriangleProvider</strong>: Uses the colliders defined in the prefab as a source for the input triangles to generate the nav mesh. This is much faster than the StaticMesh triangle provider as it works with the low poly collision geoemtry. However it requires a collider to be present in the prefab to work</li>
+<li><strong>TerrainTriangleProvider</strong>: Feeds the terrain geometry into the nav mesh generation system. So you can have your dynamic navmesh build around terrains</li>
+<li><strong>LayoutFloorTriangleProvider</strong>: Feeds the layout of a dungeon to the nav mesh generation system. This is usually faster than providing a ground mesh in the CollisionTriangleProvider</li>
+</ul>
+<p>You can use multiple triangle providers at once. You can use only the CollisionTriangleProvider for better performance. However, you can increase the performance even further by disabling the gound mesh from affecting your navigation (because there will be lots of ground meshes) and providing that ground data from an additional LayoutFloorTriangleProvider script.</p>
+<h2 id="navigation-agent">Navigation Agent</h2>
+<p>Use the NavAgent to move your NPCs in the dynamic navigation mesh</p>
+<div class="figure">
+<img src="../assets/images/navigation_07.png" alt="Navigation Mesh Triangle Providers" />
+<p class="caption">Navigation Mesh Triangle Providers</p>
+</div>
+<p>An fully working example of this with AI is provided in the SurvivalShooter demo game bundled with Dungeon Architect</p>
+<div class="figure">
+<img src="../assets/images/nav_agent_01.png" alt="Sample NPCs with Navigation Agent behaviors" />
+<p class="caption">Sample NPCs with Navigation Agent behaviors</p>
+</div>
+<p>The nav mesh agent requies a CharacterController script to be present in the game object</p>
+<div class="figure">
+<img src="../assets/images/nav_agent_02.png" alt="Sample NPCs with Navigation Agent behaviors" />
+<p class="caption">Sample NPCs with Navigation Agent behaviors</p>
+</div>
+<pre><code>    var agent = GetComponent&lt;DungeonNavAgent&gt;();
+    
+    // Move the agent to the target position
+    agent.Destination = targetPosition;
+    
+    var velocity = agent.Velocity;  // Agents velocity
+    var direction = agent.Direction;    // Agents movement direction
+    var distanceToDestination = agent.GetRemainingDistance();
+    
+    // Stop moving the agent
+    agent.Stop();
+    
+    // Resume movement
+    agent.Resume();
+</code></pre>
+<p>Have a look at the shooter game demo in the samples folder for a complete example</p>
+<div class="figure">
+<img src="../assets/images/shooter_01.png" alt="Shooter Game Demo in the Samples folder" />
+<p class="caption">Shooter Game Demo in the Samples folder</p>
+</div>
+<div class="figure">
+<img src="../assets/images/shooter_02.jpg" alt="Shooter Game Demo" />
+<p class="caption">Shooter Game Demo</p>
+</div>
+<h1 id="d-support">2D Support</h1>
+<p>Dungeon Architect fully supports 2D. You can use the same workflow to create beautiful 2D levels.</p>
+<div class="figure">
+<img src="../assets/images/2d_game.jpg" alt="2D Demo game" />
+<p class="caption">2D Demo game</p>
+</div>
+<p>A sample 2D game comes along with Dungeon Architect to help you get started. It demos dynamic 2D procedural level generation, dynamic 2D navigation mesh generation, 2D AI with patrol, seek and search behaviours</p>
+<div class="figure">
+<img src="../assets/images/2d_theme.jpg" alt="Theme with 2D Sprites" />
+<p class="caption">Theme with 2D Sprites</p>
+</div>
+<p>2D dynamic navigation mesh generation is also support.</p>
+<div class="figure">
+<img src="../assets/images/2d_navmesh.png" alt="2D Demo game" />
+<p class="caption">2D Demo game</p>
+</div>
 <h1 id="dungeon-builders">Dungeon Builders</h1>
 <p>The Default dungeon builder used to create the layout is swappable and you can provide your own implementation</p>
 <div class="figure">
