@@ -4,9 +4,9 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta http-equiv="Content-Style-Type" content="text/css" />
   <meta name="generator" content="pandoc" />
-  <title></title>
+  <meta name="author" content="for Unity 5" />
+  <title>Dungeon Architect User Guide</title>
   <style type="text/css">code{white-space: pre;}</style>
-    <title>Dungeon Architect User Guide</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="../theme/css/bootstrap.min.css">
@@ -14,11 +14,18 @@
   
     <script src="../theme/js/jquery.min.js"></script>
     <script src="../theme/js/bootstrap.min.js"></script>
-  
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
 </head>
 <body>
 
+<script>
+
+function getPdfUrl() {
+	return "../pdf/user_guide_1.0.0.pdf";
+}
+
+</script>
 
   <link rel="stylesheet" href="../theme/highlight/styles/tomorrow.css">
   <script src="../theme/highlight/highlight.pack.js"></script>
@@ -26,11 +33,14 @@
 
 <script>
  $(document).ready(function () {
-	 $("#TOC").appendTo("#toc_host");
+	 $("#TOC").prependTo("#toc_host");
 	 $("#TOC").attr("data-spy", "affix");
 	 $("#TOC").attr("data-offset-top", "5");
 	$("#TOC").addClass("bs-sidebar");
 	$("#TOC").addClass("hidden-print");
+	
+	 $("#download_pdf").appendTo("#TOC");
+	
 	 /*
 	*/
         var url = window.location.href;
@@ -134,11 +144,12 @@ $(document).ready(function() {
     });
 
 });
+
 </script>
 
 <div class="row documentationBlock">
 		<div class="col-md-3" id="toc_host">
-
+			<div id="download_pdf"><a href="javascript:document.location.href=getPdfUrl();" target="_blank"><i class="fa fa-file-pdf-o"></i> Download PDF</a></div>
 		</div>
 		<div class="col-md-9" style="font-family: 'Open Sans', sans-serif;">
 <div class="branding-logo">
@@ -154,7 +165,10 @@ $(document).ready(function() {
 			  </div>
 			  <div class="version-number">1.0.0</div>
 			</div>
-			<div class="doc-title">Dungeon Architect User Guide (Unity)</div>
+<div id="header">
+<h1 class="title">Dungeon Architect User Guide</h1>
+<h2 class="author">for Unity 5</h2>
+</div>
 <div id="TOC">
 <ul>
 <li><a href="#introduction">Introduction</a></li>
