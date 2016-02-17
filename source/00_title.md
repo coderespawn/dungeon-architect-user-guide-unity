@@ -1,1 +1,2 @@
-% Dungeon Architect User Guide (Unity)
+% Dungeon Architect User Guide
+% for Unity 5
