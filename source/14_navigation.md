@@ -11,7 +11,7 @@ Setup
 -----
 To build a navigation mesh during runtime, place the DungeonNavigation prefab on to your scene
 
-![Navigation Prefab](../assets/images/navigation_02.png)
+![Navigation Prefab](../assets/images/navigation_02_v110.png)
 
 Select the game object you just placed and have a look at the inspector window
 
@@ -106,8 +106,13 @@ The nav mesh agent requies a CharacterController script to be present in the gam
 
 Have a look at the shooter game demo in the samples folder for a complete example
 
-![Shooter Game Demo in the Samples folder](../assets/images/shooter_01.png)
+![Shooter Game Demo in the Samples folder](../assets/images/shooter_02_v110.png)
 
 ![Shooter Game Demo](../assets/images/shooter_02.jpg)
+
+![Shooter Game Demo](../assets/images/survival_hill_01.jpg)
+
+![Shooter Game Demo](../assets/images/survival_hill_02.jpg)
+
 
 

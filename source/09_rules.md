@@ -76,7 +76,7 @@ public class NonDoorTileSelectionRule : SelectorRule {
 
 In this Diablo like dungeon level,  the way our camera is setup, we don't want a room wall to block our view when we are inside a room
 
-So a we create non-view blocking fences instead of walls at certain wall facing directions
+So we create non-view blocking fences instead of walls at certain wall facing directions
 
 ![Rule to disallow wall creation in the +X and +Z-axis](../assets/images/non_view_block_rule.jpg)
 

@@ -54,3 +54,24 @@ If you've created a builder and would like to use it with your dungeon actor, dr
 ![Dungeon builder script attached to the Dungeon game object](../assets/images/dungeon_builder.png)
 
 
+Example Builders
+----------------
+Dungeon Architect comes with a sample builder named SimpleCity.   It could be used as a good reference for building your own builders
+
+![Builder Code Location](../assets/images/builder_example_path.png)
+
+![Builder Samples Location](../assets/images/builder_example_path2.png)
+
+
+![Sample City Builder](../assets/images/builder_simple_city_04.jpg)
+
+![Sample City Builder](../assets/images/builder_simple_city_01.jpg)
+
+There are also examples on how this sample builder can be further extended by the users using Marker Emitters script.   It is used emit markers around the boundary of the city, so theme files can decorate them as strongholds
+
+![Stronghold Wall Emitter](../assets/images/builder_simple_city_03.jpg)
+
+![Stronghold Wall Emitter](../assets/images/builder_simple_city_02.jpg)
+
+
+
