@@ -1,0 +1,1287 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <meta name="author" content="for Unity 5" />
+  <title>Dungeon Architect User Guide</title>
+  <style type="text/css">code{white-space: pre;}</style>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../theme/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../theme/css/theme.css">
+  
+    <script src="../theme/js/jquery.min.js"></script>
+    <script src="../theme/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+</head>
+<body>
+
+<script>
+
+function getPdfUrl() {
+	return "../pdf/user_guide_1.4.0.pdf";
+}
+
+</script>
+
+  <link rel="stylesheet" href="../theme/highlight/styles/tomorrow.css">
+  <script src="../theme/highlight/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+<script>
+ $(document).ready(function () {
+	 $("#TOC").prependTo("#toc_host");
+	 $("#TOC").attr("data-spy", "affix");
+	 $("#TOC").attr("data-offset-top", "5");
+	$("#TOC").addClass("bs-sidebar");
+	$("#TOC").addClass("hidden-print");
+	
+	 $("#download_pdf").appendTo("#TOC");
+	
+	 /*
+	*/
+        var url = window.location.href;
+        url = url.replace(window.location.hash, "");
+
+	    // Will only work if string in href matches with location
+        $('ul.nav a[href="' + url + '"]').parent().addClass('active');
+
+    // Will also work for relative and absolute hrefs
+        $('ul.nav a').filter(function () {
+            return this.href == url;
+        }).parent().addClass('active').parent().parent().addClass('active');
+
+    });
+
+// Smooth scroll
+$(function() {
+  $('a[href*=#]:not([href=#])').click(function() {
+    if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {
+      var target = $(this.hash);
+      target = target.length ? target : $('[name=' + this.hash.slice(1) +']');
+      if (target.length) {
+        $('html,body').animate({
+          scrollTop: target.offset().top
+        }, 500);
+        return false;
+      }
+    }
+  });
+});
+
+</script>
+
+<script>
+
+
+$( document ).ready(function() {
+
+	$('img.svg').each(function(){
+		var $img = jQuery(this);
+		var imgID = $img.attr('id');
+		var imgClass = $img.attr('class');
+		var imgURL = $img.attr('src');
+
+		jQuery.get(imgURL, function(data) {
+                // Get the SVG tag, ignore the rest
+                var $svg = jQuery(data).find('svg');
+
+                // Add replaced image's ID to the new SVG
+                if(typeof imgID !== 'undefined') {
+                	$svg = $svg.attr('id', imgID);
+                }
+                // Add replaced image's classes to the new SVG
+                if(typeof imgClass !== 'undefined') {
+                	$svg = $svg.attr('class', imgClass+' replaced-svg');
+                }
+
+                // Remove any invalid XML tags as per http://validator.w3.org
+                $svg = $svg.removeAttr('xmlns:a');
+
+                // Replace image with new SVG
+                $img.replaceWith($svg);
+
+            }, 'xml');
+
+	});
+});
+ </script>
+
+<div id="wrap">
+
+  	<div class="container">
+<script>
+$(document).ready(function() {
+	$('#TOC ul').each(function() {
+		$(this).addClass("nav");
+
+	});
+
+	$('#TOC').children('ul').each(function() {
+		$(this).addClass("bs-sidenav");
+	});
+
+  $('a[href="#TOC"]').each(function() {
+    $(this).after($(this).text());
+    $(this).remove();
+  })
+
+
+	$('.documentationBlock img').each(function() {
+
+		$(this).addClass("width: 100%");
+		$(this).addClass("height:100%");
+		$(this).addClass('img-responsive');
+
+	});
+	$('body').scrollspy({ target: '#TOC' })
+
+	$('img').on('load', function(e) {
+    	$('body').scrollspy('refresh');
+    });
+
+});
+
+</script>
+
+<div class="row documentationBlock">
+		<div class="col-md-3" id="toc_host">
+			<div id="download_pdf"><a href="javascript:document.location.href=getPdfUrl();" target="_blank"><i class="fa fa-file-pdf-o"></i> Download PDF</a></div>
+		</div>
+		<div class="col-md-9" style="font-family: 'Open Sans', sans-serif;">
+<div class="branding-logo">
+	<img src="../assets/images/unity-logo.png">
+</div>
+			<div class="version-block">
+			  <div class="dropdown" style="display: inline">
+			    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Version
+			    <span class="caret"></span></button>
+			    <ul class="dropdown-menu">
+			    				<li><a href="user_guide_1.4.0.html">1.4.0</a></li>
+				<li><a href="user_guide_1.1.0.html">1.1.0</a></li>
+				<li><a href="user_guide_1.0.0.html">1.0.0</a></li>
+			    </ul>
+			  </div>
+			  <div class="version-number">1.4.0</div>
+			</div>
+<div id="header">
+<h1 class="title">Dungeon Architect User Guide</h1>
+<h2 class="author">for Unity 5</h2>
+</div>
+<div id="TOC">
+<ul>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#generation-overview">Generation Overview</a><ul>
+<li><a href="#layout-generation">Layout Generation</a></li>
+<li><a href="#visual-generation">Visual Generation</a></li>
+</ul></li>
+<li><a href="#dungeon-prefab">Dungeon Prefab</a><ul>
+<li><a href="#properties">Properties</a></li>
+<li><a href="#config-parameters">Config Parameters</a></li>
+</ul></li>
+<li><a href="#theme-overview">Theme Overview</a><ul>
+<li><a href="#create-a-theme">Create a Theme</a></li>
+</ul></li>
+<li><a href="#theme-editor">Theme Editor</a><ul>
+<li><a href="#interactive-editing">Interactive Editing</a></li>
+</ul></li>
+<li><a href="#theme-nodes">Theme Nodes</a><ul>
+<li><a href="#marker-nodes">Marker Nodes</a><ul>
+<li><a href="#creating-marker-nodes">Creating marker nodes</a></li>
+</ul></li>
+<li><a href="#visual-nodes">Visual Nodes</a><ul>
+<li><a href="#creating-visual-nodes">Creating visual nodes</a></li>
+</ul></li>
+<li><a href="#marker-emitter-nodes">Marker Emitter Nodes</a><ul>
+<li><a href="#creating-marker-emitter-nodes">Creating marker emitter nodes</a></li>
+<li><a href="#cycles">Cycles</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#theme-node-properties">Theme Node Properties</a><ul>
+<li><a href="#visual-nodes-1">Visual Nodes</a><ul>
+<li><a href="#game-object-node">Game Object Node</a></li>
+<li><a href="#sprite-class-node">Sprite Class Node</a></li>
+</ul></li>
+<li><a href="#marker-node">Marker Node</a></li>
+<li><a href="#marker-emitter-node">Marker Emitter Node</a></li>
+</ul></li>
+<li><a href="#rules">Rules</a><ul>
+<li><a href="#selection-rule">Selection Rule</a><ul>
+<li><a href="#using-selection-rules">Using Selection Rules</a></li>
+<li><a href="#example-1">Example #1</a></li>
+<li><a href="#example-2">Example #2</a></li>
+<li><a href="#example-3">Example #3</a></li>
+</ul></li>
+<li><a href="#transform-rule">Transform Rule</a><ul>
+<li><a href="#using-transform-rules">Using Transform Rules</a></li>
+<li><a href="#example-1-1">Example #1</a></li>
+<li><a href="#example-2-1">Example #2</a></li>
+<li><a href="#example-3-1">Example #3</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#paint-mode">Paint Mode</a><ul>
+<li><a href="#paint-mode-properties">Paint Mode Properties</a></li>
+<li><a href="#non-procedural-painting">Non-Procedural Painting</a></li>
+</ul></li>
+<li><a href="#volumes">Volumes</a><ul>
+<li><a href="#platform-volume">Platform Volume</a></li>
+<li><a href="#theme-override-volume">Theme Override Volume</a></li>
+<li><a href="#negation-volume">Negation Volume</a></li>
+<li><a href="#marker-replacement-volume">Marker Replacement Volume</a></li>
+</ul></li>
+<li><a href="#landscape-transformer">Landscape Transformer</a><ul>
+<li><a href="#usage">Usage</a><ul>
+<li><a href="#terrain-setup">Terrain Setup</a></li>
+<li><a href="#properties-1">Properties</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#marker-emitter-scripts">Marker Emitter Scripts</a><ul>
+<li><a href="#creating-a-marker-emitter">Creating a Marker Emitter</a></li>
+<li><a href="#example-1-2">Example #1</a></li>
+<li><a href="#example-2-2">Example #2</a></li>
+<li><a href="#example-3-2">Example #3</a></li>
+</ul></li>
+<li><a href="#navigation-mesh">Navigation Mesh</a><ul>
+<li><a href="#setup">Setup</a></li>
+<li><a href="#theme-influence">Theme Influence</a></li>
+<li><a href="#config">Config</a></li>
+<li><a href="#triangle-providers">Triangle Providers</a></li>
+<li><a href="#navigation-agent">Navigation Agent</a></li>
+</ul></li>
+<li><a href="#d-support">2D Support</a></li>
+<li><a href="#dungeon-builders">Dungeon Builders</a><ul>
+<li><a href="#creating-a-new-builder">Creating a new Builder</a></li>
+<li><a href="#using-a-different-builder">Using a different Builder</a></li>
+<li><a href="#example-builders">Example Builders</a></li>
+</ul></li>
+</ul>
+</div>
+<h1 id="introduction">Introduction</h1>
+<p>Dungeon Architect is a plugin for Unity that helps in streamlining the level creation process. It allows you to quickly create levels procedurally (or manually) by blocking out volumes and having the plugin build the environment automatically around it. This document introduces you to the various features of Dungeon Architect</p>
+<h1 id="generation-overview">Generation Overview</h1>
+<p>A dungeon is generated in two phases</p>
+<ul>
+<li>Layout Generation</li>
+<li>Visual Generation</li>
+</ul>
+<div class="figure">
+<img src="../assets/images/da_design.png" alt="Architecture" />
+<p class="caption">Architecture</p>
+</div>
+<h2 id="layout-generation">Layout Generation</h2>
+<p>In this phase, only the layout of the dungeon is generated in memory. No meshes or actors are actually spawned.</p>
+<div class="figure">
+<img src="../assets/images/layout_2d.jpg" alt="Layout of the dungeon in memory" />
+<p class="caption">Layout of the dungeon in memory</p>
+</div>
+<p>Next, the level is populated with invisible points called <strong>Markers</strong> around the generated layout. A <strong>marker</strong> has only a name and a transformation in the 3D space.</p>
+<div class="figure">
+<img src="../assets/images/marker_system_01.png" alt="Markers populated for a sample room" />
+<p class="caption">Markers populated for a sample room</p>
+</div>
+<p>In the above image, after the layout has been built, the dungeon builder has populated the level with marker points around the layout of the dungeon</p>
+<h2 id="visual-generation">Visual Generation</h2>
+<p>This phase spawns the actors in your scene. It takes all the marker points inserted in the previous phase and replaces them with actors (meshes, lights, blueprints etc) that you have mapped in your theme files</p>
+<div class="figure">
+<img src="../assets/images/marker_system_02.png" alt="Actors spawned by a theme mapping" />
+<p class="caption">Actors spawned by a theme mapping</p>
+</div>
+<div class="figure">
+<img src="../assets/images/theme_map_sample.jpg" alt="Sample Theme Mapping" />
+<p class="caption">Sample Theme Mapping</p>
+</div>
+<p>The theming engine is executed for each marker inserted in the Layout generation phase. In the above example, when a <code>Ground</code> marker is encountered, it would look for a <code>Ground</code> marker mapping in your theme file and replace the marker with the meshes you have mapped to it</p>
+<div class="figure">
+<img src="../assets/images/sample_dungeon2.jpg" alt="Result after theme mapping" />
+<p class="caption">Result after theme mapping</p>
+</div>
+<p>The advantage of this data driven theme based approach is that theme files can be swapped to give your dungeon a completly different look. Theme files can also be shared across mulitple projects / teams</p>
+<p>Multiple themes can also be used within the same dungeon to create variations</p>
+<h1 id="dungeon-prefab">Dungeon Prefab</h1>
+<p>A dungeon prefab is used to build your dungeons. Dungeon Architect supports building dungeons with different layouts. The current supported ones are Grid, SimpleCity and Floorplan. Drop the appropriate dungeon prefab into the scene and reset its transform</p>
+<div class="figure">
+<img src="../assets/images/dungeon_prefab_v140.png" alt="Dungeon Prefab" />
+<p class="caption">Dungeon Prefab</p>
+</div>
+<p>The dungeon game object generate a procedural layout for your dungeon based on the various configuration paramters.<br />
+After the layout has been generated, it spawns meshes, lights, blueprints etc, based on the mappings you have defined in the Theme file. This way you can define what meshes needs to be attached to the floors, walls, ceilings, etc</p>
+<h2 id="properties">Properties</h2>
+<p>The Dungeon game object lets you perform various actions on your procedural dungeon. Select the Dungeon game object and have a look at the configuration in the Inspector window</p>
+<div class="figure">
+<img src="../assets/images/dungeon_go_properties.png" alt="Dungeon Actor Properties" />
+<p class="caption">Dungeon Actor Properties</p>
+</div>
+<p><strong>Build Dungeon:</strong> Builds a procedural dungeon. You need to define atleast one theme before you build</p>
+<p><strong>Destroy Dungeon:</strong> Destroys an existing dungeon owned by this actor. If you want to rebuild a dungeon after modifying the theme, there is no need to destroy first and you can directly click build</p>
+<p><strong>Themes:</strong> A theme file lets you design the look and feel of your dungeon. The theme editor lets you interactively design your own themes. You need to specify atleast one theme file before you can build your dungeon (sample content comes with many pre-created themes to get you started)</p>
+<p><strong>Debug Draw:</strong> Draws debug information in the scene view</p>
+<h2 id="config-parameters">Config Parameters</h2>
+<p>Select the Dungeon Actor and navigate to the Inspector window</p>
+<div class="figure">
+<img src="../assets/images/config_params.png" alt="Dungeon Config Parameters" />
+<p class="caption">Dungeon Config Parameters</p>
+</div>
+<p>The various config parameters determine how the layout of the dungeon is generated procedurally. The default layout generator algorithm is implemented based on the excellent <a href="http://www.reddit.com/r/gamedev/comments/1dlwc4/procedural_dungeon_generation_algorithm_explained/">writeup</a> by TinyKeep’s author Phi Dinh</p>
+<p>The various parameters are:</p>
+<ul>
+<li><strong>Seed</strong>: Changing this number would completely change the layout of the dungeon. This is the base random number seed that is used to build the dungeon. There is a convenience function to randomize this value (button labeled R)</li>
+<li><strong>Num Cells</strong>: The number of cells to use while building the dungeon. You will not see these cells in the final result. A larger number would create a bigger and more complex dungeon. A number of 100-150 builds a medium to large sized dungeon. Experiment with different ranges</li>
+<li><p><strong>Grid Cell Size</strong>: The dungeon generator works on a grid based system and required modular mesh assets to be placed on each cell (floors, walls, doors etc). This important field specifies the size of the cell to use. This size is determined by the art asset used in the dungeon theme designed by the artist. In the demo, we have a floor mesh that is 400x400. The height of a floor is chosen to be 200 units as the stair mesh is 200 units high. Hence the defaults are set to 400x400x200. You should change this to the dimension of the modular asset your designer has created for the dungeon</p></li>
+<li><strong>Min/Max Cell Size</strong>: This is how big or small a cell size can be. While generation, a cell is either converted to a room, corridor or is discarded completely. The Cell width / height is randomly chosen within this range</li>
+<li><strong>Room Area Threshold</strong>: If a cell size exceeds past this limit, it is converted into a room. After cells are promoted to rooms, all rooms are connected to each other through corridors (either directly or indirectly. See spanning tree later)</li>
+<li><strong>Room Aspect Delta</strong>: The aspect ratio of the cells (width to height ratio). Keeping this value near 0 would create square rooms. Bringing this close to 1 would create elongated / stretched rooms with a high width to height ratio</li>
+<li><strong>Corridor Padding:</strong> The extra width to apply to one side of a corridor</li>
+<li><p><strong>Corridor Padding Double Sided:</strong> Flag to apply the padding on both sides of the corridor</p></li>
+<li><strong>Height Variation Probability</strong>: Tweak this value to increase / reduce the height variations (and stairs) in your dungeon. A value close to 0 reduces the height variation and increases as you approach 1. Increasing this value to a higher level might create dungeons with no place for proper stair placement since there is too much height variation. A value of 0.2 to 0.4 seems good</li>
+<li><strong>Max Allowed Stair Height</strong>: The number of logical floor units the dungeon height can vary. This determines how high the dungeon’s height can vary (e.g. max 2 floors high). Set this value depending on the stair meshes you designer has created. In the sample demo, there are two stair meshes, one 200 units high (1 floor) and another 400 units high (2 floors). So the default is set to 2</li>
+<li><strong>Spanning Tree Loop</strong>: Determines how many loops you would like to have in your dungeon. A value near 0 will create fewer loops creating linear dungeons. A value near 1 would create lots of loops, which would look unoriginal. Its good to allow a few loops so a value close to zero (like 0.2 should be good)</li>
+<li><strong>Stair Connection Tolerance</strong>: The generator would add stairs to make different areas of the dungeon accessible. However, we do not want too many stairs. For e.g., before adding a stair in a particular elevated area, the generator would check if this area is already accessible from a nearby stair. If so, it would not add it. This tolerance parameter determines how far to look for an existing path before we can add a stair. Play with this parameter if you see too many stairs close to each other, or too few</li>
+<li><strong>Normal Mean / Std</strong>: The random number generator used in the dungeon generator does not use a uniform distribution. Instead it uses a normal distribution to get higher frequency of lower values and fewer higher values (and hence fewer room cells and a lot more corridor cells). Play with these parameters for different results</li>
+<li><p><strong>Initial Room Radius</strong>: Internal Usage. Keep to a low value like 10-15</p></li>
+</ul>
+<h1 id="theme-overview">Theme Overview</h1>
+<p>A theme file lets you design the look and feel of you dungeons with an intuitive graph based approach</p>
+<p>Themes are saved as a separate assets on disk. Dungeon Architect also provides an interactive editor to help you design beautiful levels</p>
+<div class="figure">
+<img src="../assets/images/theme_file_example2.jpg" alt="An example theme" />
+<p class="caption">An example theme</p>
+</div>
+<div class="figure">
+<img src="../assets/images/da_design_themes.png" alt="Themes are used by the Theming Engine" />
+<p class="caption">Themes are used by the Theming Engine</p>
+</div>
+<h2 id="create-a-theme">Create a Theme</h2>
+<p>To create a new theme, right click in the content browser and choose “Dungeon Theme”</p>
+<div class="figure">
+<img src="../assets/images/create_theme_menu.jpg" alt="Create a dungeon theme" />
+<p class="caption">Create a dungeon theme</p>
+</div>
+<div class="figure">
+<img src="../assets/images/create_theme_2a.png" alt="Dungeon Theme Asset" />
+<p class="caption">Dungeon Theme Asset</p>
+</div>
+<h1 id="theme-editor">Theme Editor</h1>
+<p>Double click a dungeon theme asset to open it in the <code>Theme Editor</code></p>
+<div class="figure">
+<img src="../assets/images/create_theme_2b.png" alt="Dungeon Architect Theme Editor" />
+<p class="caption">Dungeon Architect Theme Editor</p>
+</div>
+<h2 id="interactive-editing">Interactive Editing</h2>
+<p>As you design your theme, the scene view automatically gets updated based on your theme graph mapping. To make this happen, you need to have a dungeon game object in the scene with the current theme being edited applied to it</p>
+<div class="figure">
+<img src="../assets/images/dungeon_theme_edit.png" alt="Dungeon Architect Theme Editor" />
+<p class="caption">Dungeon Architect Theme Editor</p>
+</div>
+<p>Whenever you change the theme, the theme editor would search for a dungeon game object in the scene (that has this theme applied to it) and rebuild it. This way, you get an immediate visual feedback while designing the look and feel of you levels</p>
+<h1 id="theme-nodes">Theme Nodes</h1>
+<p>A Theme can have 3 category of nodes</p>
+<ul>
+<li><strong>Marker Nodes</strong></li>
+<li><strong>Visual Nodes</strong></li>
+<li><strong>Marker Emitter Nodes</strong></li>
+</ul>
+<div class="figure">
+<img src="../assets/images/node_types.png" alt="Theme Node categories" />
+<p class="caption">Theme Node categories</p>
+</div>
+<h2 id="marker-nodes">Marker Nodes</h2>
+<p>After the layout generation phase, the scene would be scattered with invisible named points called <strong>Markers</strong>. Then, for every marker point in the scene, the theming engine looks for a corresponding <strong>Marker Node</strong> with that marker name. If found, it would start executing all the nodes defined below the marker node.</p>
+<p>For e.g., if you have a marker node named <code>Ground</code>, it would be invoked for every <code>Ground</code> marker found in the scene. Once invoked, the theming engine executes all the nodes defined below it from left to right untill a certain condition is met</p>
+<div class="figure">
+<img src="../assets/images/ground_node.png" alt="Ground Node" />
+<p class="caption">Ground Node</p>
+</div>
+<p>In the above example:</p>
+<ol style="list-style-type: decimal">
+<li>In the first phase, the layout builder has populated the map with ground markers, wherever a ground mesh was expected.<br />
+</li>
+<li>Then in the next phase, the theming engine ecounters the <code>Ground</code> marker while iterating through all the markers in the scene</li>
+<li>It then looks for a <strong>Marker Node</strong> named <code>Ground</code> in the theme graph</li>
+<li>Once found, it executes the visual nodes defined below it, starting from left to right</li>
+</ol>
+<p>When you create a new theme asset, the theme graph comes with a set of default marker nodes.</p>
+<p>You can define new marker nodes and build your own hierarcy for advanced theming</p>
+<p>Names of custom marker nodes can be changed by double clicking on them, or from the details tab</p>
+<h3 id="creating-marker-nodes">Creating marker nodes</h3>
+<p>To create a marker node, right click anywhere in the empty area and choose <strong>Add Marker Node</strong></p>
+<div class="figure">
+<img src="../assets/images/create_node_marker.png" alt="Add new marker node from the Context Menu" />
+<p class="caption">Add new marker node from the Context Menu</p>
+</div>
+<h2 id="visual-nodes">Visual Nodes</h2>
+<p>Visual nodes are used for spawning visual objects into the scene (e.g. any game objects, sprites etc). They are usually attached to a marker node and executed whenever an marker with that name is encountered in the scene. When executed, it spawns a game object defined within it and places it in the scene where the marker was encountered</p>
+<p>You can create the following visual nodes:</p>
+<ul>
+<li><strong>Game Object Node</strong> - Spawns any type of a game object. Expects a game object template (e.g. prefabs)</li>
+<li><strong>Sprite Node</strong> - Spawns a sprite for your 2D games. Expects a sprite reference. Also have sprite specific properties</li>
+</ul>
+<h3 id="creating-visual-nodes">Creating visual nodes</h3>
+<p>There are several ways to create a new visual node:</p>
+<p>Drag and drop a game object from the <em>Project</em> window on to the theme editor to create a Game Object or Sprite node</p>
+<div class="figure">
+<img src="../assets/images/drag_drop_go.png" alt="Drag an drop prefabs into the theme editor" />
+<p class="caption">Drag an drop prefabs into the theme editor</p>
+</div>
+<p>Alternatively, drag a link out of the marker node you intend to attach it on and select the appropriate visual node you desire</p>
+<div class="figure">
+<img src="../assets/images/create_node_menu_1.png" alt="Drag a link from existing marker nodes" />
+<p class="caption">Drag a link from existing marker nodes</p>
+</div>
+<div class="figure">
+<img src="../assets/images/create_node_menu_2.png" alt="This would create an empty visual node" />
+<p class="caption">This would create an empty visual node</p>
+</div>
+<p>Then select the node and assign the game object template from the inspector window</p>
+<div class="figure">
+<img src="../assets/images/node_properties_visual_template.png" alt="This would create an empty visual node" />
+<p class="caption">This would create an empty visual node</p>
+</div>
+<h2 id="marker-emitter-nodes">Marker Emitter Nodes</h2>
+<p>Marker Emitters emit new markers into the scene. These nodes are attached to visual nodes and if the parent visual node is executed, it would insert a named marker into the scene.</p>
+<p><strong>Marker Emitter</strong> nodes are similar in apperarance to Marker Nodes. However, they are purple in color and have an input pin, instead of an output pin</p>
+<div class="figure">
+<img src="../assets/images/marker_emitter_sample.png" alt="Marker Emitter Sample" />
+<p class="caption">Marker Emitter Sample</p>
+</div>
+<p>In the above example, the <code>Wall</code> Marker has 3 Mesh nodes attached to it with probability such that any one for the 3 would be randomly chosen.<br />
+One of the 3 meshes has a window in it and we would like to decorate that mesh with curtains, but only if that node is selected. So, we define a new Marker named <code>Curtains</code> (can be any name) and attach curtain meshes to it. Then we <strong>emit</strong> a <code>Curtain</code> Marker Node from the desired visual node. Hence, if the mesh in the middle is executed, it would also insert a marker named <em>Curtain</em> in its position. Then the theming engine would execute everything beneath the <code>Curtain</code> marker and pick a random curtain and attach to the wall</p>
+<div class="figure">
+<img src="../assets/images/marker_emitter_scene.jpg" alt="Sample Dungeon Scene" />
+<p class="caption">Sample Dungeon Scene</p>
+</div>
+<p>This ability of defining your own hierarchy lets you design powerful themes for your levels</p>
+<h3 id="creating-marker-emitter-nodes">Creating marker emitter nodes</h3>
+<p>To create a <strong>Marker Emitter</strong> Node, drag a link out of a visual node and select a marker name you would like to emit</p>
+<div class="figure">
+<img src="../assets/images/create_marker_emitter_01.png" alt="Choose a Marker to emit from the filtered context menu" />
+<p class="caption">Choose a Marker to emit from the filtered context menu</p>
+</div>
+<p>Alternatively, right click anywhere in the empty area and expand the <code>Marker Emitters</code> category and click choose a marker to emit</p>
+<div class="figure">
+<img src="../assets/images/create_marker_emitter_02.png" alt="Choose a Marker to emit from the context menu" />
+<p class="caption">Choose a Marker to emit from the context menu</p>
+</div>
+<p>You can create a marker emitter for any of the existing markers in the scene</p>
+<h3 id="cycles">Cycles</h3>
+<p>Cycles are not allowed when you emit markers since we do not want to continuously emit markers in an infinite loop</p>
+<p>The editor takes care of not allowing cycles and notifies you with a user-friendly message when you attempt to create a connection with a marker emitter that might cause a loop</p>
+<div class="figure">
+<img src="../assets/images/cycles.png" alt="Cycles not allowed" />
+<p class="caption">Cycles not allowed</p>
+</div>
+<h1 id="theme-node-properties">Theme Node Properties</h1>
+<p>A node in the theme graph can be customized from the Details Tab</p>
+<h2 id="visual-nodes-1">Visual Nodes</h2>
+<p>Select a visual node (e.g. a Game Object node) and have a look at the details tab:</p>
+<div class="figure">
+<img src="../assets/images/node_properties_visual.png" alt="Game Object Node properties" />
+<p class="caption">Game Object Node properties</p>
+</div>
+<p>The properties that are common to all Visual nodes (Game Object, Sprite etc) are explained below:</p>
+<p><strong>Offset:</strong> Apply transformation offset to your visual object relative to the marker location. This is a very useful property while designing your theme. If the pivot of the mesh your artist has designed isn’t where you wish it were, you can easily adjust it here to translate / rotate it around. You can also scale objects if they are too small / big. While designing your theme, you’ll find this property useful to re-position your visual nodes, if required.</p>
+<p><strong>Probability:</strong> This is the probability of attachment. When this node is executed, the theming engine looks at this variable and rolls a dice and decides whether to insert this visual object into the scene or not. If this value is 1.0, then it would insert it 100% of the time. If the value is 0, then it would not insert it since selection probability 0%. If it is 0.5, then it would insert it 50% of the time</p>
+<p><strong>Consume on Attach:</strong> If the visual object was indeed spawned into the scene (based on the probability above), the theming engine would then look at this flag to decide if we need to execute the next sibling visual node. If it is checked, then execution stops for this marker. If it is unchecked, the next sibling gets processed. <em>Affinity</em> and <em>Consume on Attach</em> can be combined to create interesting possiblities in your theme</p>
+<p><strong>Selection Logic:</strong> Lets you define selection logic scripts. You have seen an example above of node selected based on random probability (Probability property). The selection process can be far more power than a simple random probability based selection. You can define you own behavior scripts and assign it here so your custom logic can decide if a node is to be selected or not. More details below</p>
+<p><strong>Transform Logic:</strong> In the Offset property as seen above, you can define a static offset transformation to move/scale/rotate the visual object from the marker position. With Transform Logic, your behavior scripts can provide dynamic tranform offsets based on a logic. For e.g., you might want to rotate/scale/translate a tree randomly to give natural variation instead of having them all face the same direction. More on this later</p>
+<h3 id="game-object-node">Game Object Node</h3>
+<p>A game object not lets you instantiate any type of game object on the scene</p>
+<div class="figure">
+<img src="../assets/images/node_properties_go.png" alt="Game Object Node specific properties" />
+<p class="caption">Game Object Node specific properties</p>
+</div>
+<p><strong>Template:</strong> Specify a game object template (prefab) to spawn in the scene. The node’s thumbnail will update to reflect the game object assigned here</p>
+<p><strong>Static</strong>: Set this if you want to make your object static. If you are spawning dynamic objects (like NPCs), then uncheck this flag</p>
+<h3 id="sprite-class-node">Sprite Class Node</h3>
+<p>If you are making a 2D game, you’ll use <strong>Sprite nodes</strong> to build your scene</p>
+<div class="figure">
+<img src="../assets/images/da_scene_2d.jpg" alt="2D Procedural Scene" />
+<p class="caption">2D Procedural Scene</p>
+</div>
+<div class="figure">
+<img src="../assets/images/sprite_nodes.png" alt="Sprite Nodes" />
+<p class="caption">Sprite Nodes</p>
+</div>
+<p>Here are the sprite specific parameters:</p>
+<div class="figure">
+<img src="../assets/images/node_properties_sprite.png" alt="Sprite Node Properties" />
+<p class="caption">Sprite Node Properties</p>
+</div>
+<p><strong>Sprite:</strong> Assign the sprite you would like to spawn with this node. The thumbnail of the node displays this sprite, if assigned</p>
+<p><strong>Color:</strong> The color tint to assign on the sprite node</p>
+<p><strong>Material Override:</strong> Specify the different material to use on your sprite (e.g. translucent, masked etc). If unassigned, the default material would be used that is spawned with Unity’s sprite object</p>
+<p><strong>Sorting Layer Name:</strong> The name of the 2D sorting layer used with Unity’s 2D framework</p>
+<p><strong>Order in Layer:</strong> The order this mesh should appear in the layer. This value is set in Unity’s 2D sprite object</p>
+<p><strong>Static</strong>: Set this if you want to make your object static. If you are spawning dynamic objects (like NPCs), then uncheck this flag</p>
+<h2 id="marker-node">Marker Node</h2>
+<p>You can change the name of a marker node by setting it’s <strong>Name</strong> field</p>
+<div class="figure">
+<img src="../assets/images/node_properties_marker.png" alt="Marker Node Properties" />
+<p class="caption">Marker Node Properties</p>
+</div>
+<h2 id="marker-emitter-node">Marker Emitter Node</h2>
+<p>When you emit a marker, you can apply an offset to the emitted marker in the <strong>Offset</strong> field</p>
+<div class="figure">
+<img src="../assets/images/node_properties_marker_emitter.png" alt="Marker Emitter Node Properties" />
+<p class="caption">Marker Emitter Node Properties</p>
+</div>
+<h1 id="rules">Rules</h1>
+<p>You can attach script to add logic on the theme nodes for more control. There are two types of rules you can attach to Visual nodes</p>
+<div class="figure">
+<img src="../assets/images/node_property_rules.png" alt="Visual Node Rules" />
+<p class="caption">Visual Node Rules</p>
+</div>
+<h2 id="selection-rule">Selection Rule</h2>
+<p>A selection rule is a behavior script that is used to decide if the current node is to be attached to the scene. This rule replaces the default <strong>Probability</strong> property that is used for randomly deciding if visual node needs spawning based on a probability.</p>
+<p>Selection rules gives you more power, when you need it. In the rule’s script logic, you can query the dungeon model and determine if this node should be inserted into the scene</p>
+<h3 id="using-selection-rules">Using Selection Rules</h3>
+<p>To assing an existing rule into the node, Check the <strong>Use Selection Logic</strong> property and drop in the <em>Selection Rule</em> script you would like to attach to the node</p>
+<div class="figure">
+<img src="../assets/images/selection_rule_01.png" alt="Assign an existing Selection Rule" />
+<p class="caption">Assign an existing Selection Rule</p>
+</div>
+<p>You can create new Selection Rules by overriding the <code>AlternateSelectionRule</code> class under the <code>DungeonArchitect</code> namespace</p>
+<pre><code>using UnityEngine;
+using System.Collections;
+using DungeonArchitect;
+
+public class MySelectionRule : SelectorRule {
+    public override bool CanSelect(PropSocket socket, Matrix4x4 propTransform, DungeonModel model, System.Random random) {
+        bool selected = false;
+        // Your selection logic here
+
+        return selected
+    }
+}
+</code></pre>
+<h3 id="example-1">Example #1</h3>
+<p>This theme decorates the sides of the walls with props. Sometimes, they get in the way and block the doors.</p>
+<div class="figure">
+<img src="../assets/images/door_blocking_props.jpg" alt="Decorative props blocking the door pathway" />
+<p class="caption">Decorative props blocking the door pathway</p>
+</div>
+<p>A selection rule is used to query the dungeon model and check if it is near a door. If so, it returns false indicating that we don’t want to insert it here</p>
+<div class="figure">
+<img src="../assets/images/door_blocking_props_fix.jpg" alt="Decorative props removed near doors" />
+<p class="caption">Decorative props removed near doors</p>
+</div>
+<div class="figure">
+<img src="../assets/images/door_blocking_props_rule.png" alt="Rule to avoid creation of props near doors" />
+<p class="caption">Rule to avoid creation of props near doors</p>
+</div>
+<pre><code>using UnityEngine;
+using System.Collections;
+using DungeonArchitect;
+using DungeonArchitect.Utils;
+using DungeonArchitect.Builders.Grid;
+
+public class NonDoorTileSelectionRule : SelectorRule {
+    public override bool CanSelect(PropSocket socket, Matrix4x4 propTransform, DungeonModel model, System.Random random) {
+        if (model is GridDungeonModel) {
+            var gridModel = model as GridDungeonModel;
+            var config = gridModel.Config as GridDungeonConfig;
+            var cellSize = config.GridCellSize;
+
+            var position = Matrix.GetTranslation(ref propTransform);
+            var gridPositionF = MathUtils.Divide (position, cellSize);
+            var gridPosition = MathUtils.ToIntVector(gridPositionF);
+            var cellInfo = gridModel.GetGridCellLookup(gridPosition.x, gridPosition.z);
+            return !cellInfo.ContainsDoor;
+        } else {
+            return false;
+        }
+    }
+}
+</code></pre>
+<h3 id="example-2">Example #2</h3>
+<p>In this Diablo like dungeon level, the way our camera is setup, we don’t want a room wall to block our view when we are inside a room</p>
+<p>So we create non-view blocking fences instead of walls at certain wall facing directions</p>
+<div class="figure">
+<img src="../assets/images/non_view_block_rule.jpg" alt="Rule to disallow wall creation in the +X and +Z-axis" />
+<p class="caption">Rule to disallow wall creation in the +X and +Z-axis</p>
+</div>
+<div class="figure">
+<img src="../assets/images/non_view_block_rule2.jpg" alt="View not blocked by walls" />
+<p class="caption">View not blocked by walls</p>
+</div>
+<div class="figure">
+<img src="../assets/images/non_view_block_prop.png" alt="Rule assignment to the wall node" />
+<p class="caption">Rule assignment to the wall node</p>
+</div>
+<p>In the above theme, the rule is attached to the first node, and if true, it would emit a <strong>RoomblockingWall</strong> marker which would create a wall and decorative props. Otherwise, it would proceed to the next node, which emits a <strong>Fence</strong> marker and would create the fence meshes defined under it</p>
+<p>This is done with a simple rule that checks the direction of the wall and decides if the view would be blocked from here</p>
+<pre><code>using UnityEngine;
+using System.Collections.Generic;
+using DungeonArchitect;
+using DungeonArchitect.Utils;
+
+public class NonViewBlockingSelectionRule : SelectorRule {
+    static Vector3[] validDirections = new Vector3[] {
+        new Vector3(1, 0, 0),
+        new Vector3(0, 0, 1),
+    };
+
+    public override bool CanSelect(PropSocket socket, Matrix4x4 propTransform, DungeonModel model, System.Random random) {
+        var rotation = Matrix.GetRotation(ref socket.Transform);
+        var baseDirection = new Vector3(1, 0, 0);
+        var direction = rotation * baseDirection;
+        foreach (var testDirection in validDirections) {
+            var dot = Vector3.Dot(direction, testDirection);
+            if (dot &gt; 0.707f) return true;
+        }
+        return false;
+    }
+
+}
+</code></pre>
+<h3 id="example-3">Example #3</h3>
+<p>In this example the towers are too crowded and close to each other.</p>
+<div class="figure">
+<img src="../assets/images/selection_eg3_1.jpg" alt="Towers are too close to each other" />
+<p class="caption">Towers are too close to each other</p>
+</div>
+<p>A selector rule is created to select alternate cells</p>
+<div class="figure">
+<img src="../assets/images/selection_eg3_2.jpg" alt="Select alternate cells" />
+<p class="caption">Select alternate cells</p>
+</div>
+<div class="figure">
+<img src="../assets/images/selection_eg3_3.png" alt="Rule assignment" />
+<p class="caption">Rule assignment</p>
+</div>
+<pre><code>using UnityEngine;
+using System.Collections;
+using DungeonArchitect;
+
+public class AlternateSelectionRule : SelectorRule {
+    public override bool CanSelect(PropSocket socket, Matrix4x4 propTransform, DungeonModel model, System.Random random) {
+        return (socket.gridPosition.x + socket.gridPosition.z) % 2 == 0;
+    }
+}
+</code></pre>
+<p>The above logic uses a checker board pattern, where you sum the X and Y position and return true if it is an even number</p>
+<h2 id="transform-rule">Transform Rule</h2>
+<p>Dungeon Architect lets you specify offsets to your visual nodes to move/scale/rotate them from their relative marker locations.</p>
+<div class="figure">
+<img src="../assets/images/offset_property.png" alt="Static node Offset" />
+<p class="caption">Static node Offset</p>
+</div>
+<p>However, if you want a more dynamic way of applying offsets (based on scripts), you can do so with a <em>Transform Rule</em>. This can be very useful to add variations to your levels for certain props</p>
+<h3 id="using-transform-rules">Using Transform Rules</h3>
+<p>To assing an existing rule into the node, Check the <strong>Use Transform Logic</strong> property and select the rule you would like to attach to the transform script</p>
+<div class="figure">
+<img src="../assets/images/transform_rule_assign.png" alt="Assigning a Transform Rule" />
+<p class="caption">Assigning a Transform Rule</p>
+</div>
+<p>You can create new transform rules by implementing the <code>TransformationRule</code> class under the <code>DungeonArchitect</code> namespace</p>
+<pre><code>using UnityEngine;
+using System.Collections;
+using DungeonArchitect;
+using DungeonArchitect.Utils;
+
+public class RandomRotYTransformRule : TransformationRule {
+    
+    public override void GetTransform(PropSocket socket, DungeonModel model, Matrix4x4 propTransform, System.Random random, out Vector3 outPosition, out Quaternion outRotation, out Vector3 outScale) {
+        base.GetTransform(socket, model, propTransform, random, out outPosition, out outRotation, out outScale);
+
+        // Your transform logic here. 
+        // Update the outPosition, outRotation or outScale if necessary
+    }
+}
+</code></pre>
+<h3 id="example-1-1">Example #1</h3>
+<p>In this example, the cliff rocks are facing the same direction and look boring and unnatural</p>
+<div class="figure">
+<img src="../assets/images/cliff_rock_norule.jpg" alt="Rocks without transform rules" />
+<p class="caption">Rocks without transform rules</p>
+</div>
+<div class="figure">
+<img src="../assets/images/cliff_rock_rule.jpg" alt="Rocks randomly rotated and slightly translated" />
+<p class="caption">Rocks randomly rotated and slightly translated</p>
+</div>
+<div class="figure">
+<img src="../assets/images/transform_rule_assignment.png" alt="Rule assignment on the rock’s base node" />
+<p class="caption">Rule assignment on the rock’s base node</p>
+</div>
+<pre><code>using UnityEngine;
+using System.Collections;
+using DungeonArchitect;
+using DungeonArchitect.Utils;
+
+public class RandomCliffTransformRule : TransformationRule {
+    
+    public override void GetTransform(PropSocket socket, DungeonModel model, Matrix4x4 propTransform, System.Random random, out Vector3 outPosition, out Quaternion outRotation, out Vector3 outScale) {
+        base.GetTransform(socket, model, propTransform, random, out outPosition, out outRotation, out outScale);
+        
+        // Randomly rotate along the Y-axis
+        var angle = random.NextFloat() * 360;
+        var rotation = Quaternion.Euler(0, angle, 0);
+        outRotation = rotation;
+
+        // Slightly translate the node
+        var variation = new Vector3(0.25f, -1, 0.25f);
+        outPosition = Vector3.Scale (random.OnUnitSphere(), variation);
+    }
+}
+</code></pre>
+<p>A similar rule is applied to trees to randomly rotate them along the Y-axis and randomly scale them slightly</p>
+<h3 id="example-2-1">Example #2</h3>
+<p>In this example, the outer trees are spawned in the same height as the dungeon layout</p>
+<div class="figure">
+<img src="../assets/images/tree_noclamp.jpg" alt="Tree spawned near the dungeon layout" />
+<p class="caption">Tree spawned near the dungeon layout</p>
+</div>
+<p>However, we also have a terrain that Dungeon Architect modifies, whose steepness value is controlled by the user using a curve.</p>
+<p>So, we would like to clamp this tree’s base on the dynamic terrain.</p>
+<div class="figure">
+<img src="../assets/images/tree_clamp.jpg" alt="Proper offset applied to move it to the terrain ground" />
+<p class="caption">Proper offset applied to move it to the terrain ground</p>
+</div>
+<p>This is done by finding the height of the terrain at that location, and creating an offset such that the tree would move up or down to properly clamp on it</p>
+<pre><code>using UnityEngine;
+using System.Collections;
+using DungeonArchitect;
+using DungeonArchitect.Utils;
+
+public class ClampToTerrainTransformRule : TransformationRule {
+    
+    public override void GetTransform(PropSocket socket, DungeonModel model, Matrix4x4 propTransform, System.Random random, out Vector3 outPosition, out Quaternion outRotation, out Vector3 outScale) {
+        base.GetTransform(socket, model, propTransform, random, out outPosition, out outRotation, out outScale);
+
+        var terrain = Terrain.activeTerrain;
+        if (terrain == null) {
+            return;
+        }
+
+        var position = Matrix.GetTranslation(ref propTransform);
+        var currentY = position.y;
+        var targetY = LandscapeDataRasterizer.GetHeight(terrain, position.x, position.z);
+
+        // Apply an offset so we are touching the terrain
+        outPosition.y = targetY - currentY;
+    }
+}
+</code></pre>
+<h3 id="example-3-1">Example #3</h3>
+<p>In this example a small random rotation is applied to ground tiles. Useful while creating ruins when laying down broken tile meshes</p>
+<div class="figure">
+<img src="../assets/images/ruin_floor_transform.jpg" alt="Transform rule applied to ground tiles" />
+<p class="caption">Transform rule applied to ground tiles</p>
+</div>
+<pre><code>using UnityEngine;
+using System.Collections;
+using DungeonArchitect;
+using DungeonArchitect.Utils;
+
+public class BrokenTilesTransformRule : TransformationRule {
+
+    public float maxAngle = 5;
+
+    public override void GetTransform(PropSocket socket, DungeonModel model, Matrix4x4 propTransform, System.Random random, out Vector3 outPosition, out Quaternion outRotation, out Vector3 outScale) {
+        base.GetTransform(socket, model, propTransform, random, out outPosition, out outRotation, out outScale);
+        
+        var rx = random.Range(-maxAngle, maxAngle);
+        var ry = random.Range(-maxAngle, maxAngle);
+        var rz = random.Range(-maxAngle, maxAngle);
+    
+        outRotation = Quaternion.Euler(rx, ry, rz);
+    }
+}
+</code></pre>
+<h1 id="paint-mode">Paint Mode</h1>
+<p>Dungeon Architect also allows you to paint your own dungeon layouts with an editor extension. This gives you more artistic control as you are no longer restricted by what the procedural algorithm creates for you</p>
+<p>To Activate the Paint Editor mode and start painting, expand the DungeonGrid game object and select the PaintMode game object. This would change your editor’s scene view into <strong>Paint Mode</strong></p>
+<div class="figure">
+<img src="../assets/images/paint01.png" alt="Activate Paint Mode" />
+<p class="caption">Activate Paint Mode</p>
+</div>
+<p>When you are in the Paint Mode, the Scene View shows the layout of your dungeon in Blue</p>
+<p><img src="../assets/images/paint02.jpg" /> <img src="../assets/images/paint03.jpg" /></p>
+<p>You can now paint your layout on the Scene View</p>
+<ul>
+<li><strong>Left Click:</strong> Paint layout</li>
+<li><strong>Shift + Left Click:</strong> Delete painted layout</li>
+<li><strong>Mouse Wheel:</strong> Change paint height</li>
+</ul>
+<div class="figure">
+<img src="../assets/images/paint04.jpg" alt="Starting Scene" />
+<p class="caption">Starting Scene</p>
+</div>
+<div class="figure">
+<img src="../assets/images/paint05a.jpg" alt="Painted cells show up in Cyan color" />
+<p class="caption">Painted cells show up in Cyan color</p>
+</div>
+<div class="figure">
+<img src="../assets/images/paint05b.jpg" alt="Modifed layout" />
+<p class="caption">Modifed layout</p>
+</div>
+<p>Another Example: <img src="../assets/images/paint06a.jpg" alt="Paint Mode Example" /> <img src="../assets/images/paint06b.jpg" alt="Paint Mode Example" /> <img src="../assets/images/paint06c.jpg" alt="Paint Mode Example" /> <img src="../assets/images/paint06d.jpg" alt="Paint Mode Example" /></p>
+<h2 id="paint-mode-properties">Paint Mode Properties</h2>
+<p>When you select the Paint mode game object, you can set various parameters to control the paint tool:</p>
+<div class="figure">
+<img src="../assets/images/paint01.png" alt="Paint Mode Game Object" />
+<p class="caption">Paint Mode Game Object</p>
+</div>
+<div class="figure">
+<img src="../assets/images/paint_prop.png" alt="Paint Mode Properties" />
+<p class="caption">Paint Mode Properties</p>
+</div>
+<h2 id="non-procedural-painting">Non-Procedural Painting</h2>
+<p>If you do not want any procedural content to be generated when you paint your level, then set the <strong>Num Cells</strong> property to <code>0</code> in your Dungeon Actor’s Configuration section</p>
+<div class="figure">
+<img src="../assets/images/num_cells_zero.png" alt="Stop procedural layout generation" />
+<p class="caption">Stop procedural layout generation</p>
+</div>
+<p>This way the dungeon would have an empty layout, allowing you to paint from scratch</p>
+<p>If you do want procedural content but want to remove certain procedural areas that are getting in your way, then use a <em>Negation Volume</em></p>
+<h1 id="volumes">Volumes</h1>
+<p>Dungeon Architect provides various volumes to help you influence your dungeon as per your requirements.</p>
+<p>You can find the various volume prefabs under <code>Assets/DungeonArchtitect/Prefabs</code></p>
+<div class="figure">
+<img src="../assets/images/asset_prefab.png" alt="Platform Volume Prefab" />
+<p class="caption">Platform Volume Prefab</p>
+</div>
+<h2 id="platform-volume">Platform Volume</h2>
+<p>Place a platform volume anywhere in the scene and Dungeon Architect would adjust the dungeon layout and create a platform (room or corridor) at that location. Scale the volume along the XZ plane to change the size of the generated platform. You can move the platform volume with the move tool to the desired location. (Rotation is not supported)</p>
+<p>This gives you artistic control and lets you manipulate the dungeon to suit your needs</p>
+<p>To place a platform volume, navigate to <code>Assets/DungeonArchtitect/Prefabs</code></p>
+<div class="figure">
+<img src="../assets/images/volume_platform.png" alt="Platform Volume Prefab" />
+<p class="caption">Platform Volume Prefab</p>
+</div>
+<p>Drag and drop the Platform Volume Prefab into the scene view</p>
+<div class="figure">
+<img src="../assets/images/pv01.jpg" alt="Platform Volume Prefab" />
+<p class="caption">Platform Volume Prefab</p>
+</div>
+<p>Select the platform volume and have a look at it’s properties</p>
+<div class="figure">
+<img src="../assets/images/pv_prop.png" alt="Platform Volume Properties" />
+<p class="caption">Platform Volume Properties</p>
+</div>
+<p>The Volume needs to know which dungeon the volume belongs to (DA Supports mulitple dungeons within the same scene).</p>
+<p>Assign the dungeon you’d like this volume to affect in the <strong>Dungeon</strong> field</p>
+<p>Select the type of cell to create on this platform’s location (Room or Corridor)</p>
+<p>Corridors form isolated platforms in the dungeon which merge nicely with existing corridor cells</p>
+<div class="figure">
+<img src="../assets/images/pv02.jpg" alt="Corridor platform" />
+<p class="caption">Corridor platform</p>
+</div>
+<div class="figure">
+<img src="../assets/images/pv03.jpg" alt="Merges nicely with existing procedural layout" />
+<p class="caption">Merges nicely with existing procedural layout</p>
+</div>
+<div class="figure">
+<img src="../assets/images/pv04.jpg" alt="Volume moved up along the Y-axis" />
+<p class="caption">Volume moved up along the Y-axis</p>
+</div>
+<div class="figure">
+<img src="../assets/images/pv05.jpg" alt="Volume moved down along the Y-axis" />
+<p class="caption">Volume moved down along the Y-axis</p>
+</div>
+<p>Rooms always connect to atleast one other room in the dungeon. Changing the Cell type to <em>Room</em> creates this result</p>
+<div class="figure">
+<img src="../assets/images/pv06.jpg" alt="Room platform" />
+<p class="caption">Room platform</p>
+</div>
+<p>A button to rebuild the dungeon is provided for convenience. It rebuilds the dungeon in the scene</p>
+<h2 id="theme-override-volume">Theme Override Volume</h2>
+<p>Give certain areas of you dungeons a different look and feel. Layout inside this volume would use the theme defined by this volume.</p>
+<p>This is useful for adding variations to your level</p>
+<div class="figure">
+<img src="../assets/images/tov_01.jpg" alt="Sample Dungeon" />
+<p class="caption">Sample Dungeon</p>
+</div>
+<div class="figure">
+<img src="../assets/images/tov_02.jpg" alt="Selective areas overriden by Theme Override Volumes" />
+<p class="caption">Selective areas overriden by Theme Override Volumes</p>
+</div>
+<div class="figure">
+<img src="../assets/images/tov_03.jpg" alt="Geometry within the volume picks up the theme defined by the volume" />
+<p class="caption">Geometry within the volume picks up the theme defined by the volume</p>
+</div>
+<p>Select the theme override volume and have a look at it’s properties</p>
+<div class="figure">
+<img src="../assets/images/tov_prop.png" alt="Theme Override Volume Properties" />
+<p class="caption">Theme Override Volume Properties</p>
+</div>
+<p><strong>Dungeon</strong>: Set the dungeon game object this volume should affect</p>
+<p><strong>Override Theme</strong>: Set the dungeon theme asset you would like to apply to the geometry within this volume</p>
+<p>Note: When overriding, the themes needs to be designed for the same grid cell size for proper results</p>
+<p>A button to rebuild the dungeon is provided for convenience. It rebuilds the dungeon in the scene</p>
+<h2 id="negation-volume">Negation Volume</h2>
+<p>This volume removes all procedural geometry inside of this volume. Use this to get rid of procedural geometry in areas you do not need or when it is getting in the way while manually painting your layout</p>
+<div class="figure">
+<img src="../assets/images/nv_01.jpg" alt="Procedural geometry we’d like to remove" />
+<p class="caption">Procedural geometry we’d like to remove</p>
+</div>
+<div class="figure">
+<img src="../assets/images/nv_02.jpg" alt="Geometry inside the volume removed after a rebuild" />
+<p class="caption">Geometry inside the volume removed after a rebuild</p>
+</div>
+<p>Select the negation volume and have a look at it’s properties</p>
+<div class="figure">
+<img src="../assets/images/nv_prop.png" alt="Geometry inside the volume removed after a rebuild" />
+<p class="caption">Geometry inside the volume removed after a rebuild</p>
+</div>
+<p><strong>Dungeon</strong>: Set the dungeon game object this volume should affect</p>
+<p>A button to rebuild the dungeon is provided for convenience. It rebuilds the dungeon in the scene</p>
+<h2 id="marker-replacement-volume">Marker Replacement Volume</h2>
+<p>A marker replacement volume replaces marker in the dungeon with your own supplied markers. This is useful if say, you want to replace a wall with a door. You would add a mapping that would replace all the “Wall” markers with “Door” markers. Since this is executed before the theming is applied, this gives you a lot of low level control</p>
+<p>Check the video for instructions on how to use it</p>
+<p><iframe width="853" height="480" src="https://www.youtube.com/embed/aqc0HsaKOpM?rel=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe></p>
+<h1 id="landscape-transformer">Landscape Transformer</h1>
+<p>Dungeon architect can also modify the landscape when it builds the dungeon. Starting with an empty terrain, it can modify its height and paint it in intresting ways.</p>
+<div class="figure">
+<img src="../assets/images/terrain_01.jpg" alt="Terrain Transformed along the dungeon layout" />
+<p class="caption">Terrain Transformed along the dungeon layout</p>
+</div>
+<p>In the above screenshot, a blank terrain was provided as input to the script. It has updated its height (based on a steepness curve provided by the user) and painted the ground, cliffs and pathways with input textures (notice the organic dirt pathway along the layout)</p>
+<p>Here’s another Example:</p>
+<div class="figure">
+<img src="../assets/images/tov_03.jpg" alt="Terrain Transformed along the dungeon layout" />
+<p class="caption">Terrain Transformed along the dungeon layout</p>
+</div>
+<h2 id="usage">Usage</h2>
+<p>Navigate to <code>Assets/DungeonArchitect/Scripts/Dungeon/Landscape</code></p>
+<div class="figure">
+<img src="../assets/images/ls_01.png" alt="Landscape Transformer script" />
+<p class="caption">Landscape Transformer script</p>
+</div>
+<p>Attach the script <code>LandscapeTransformerGrid</code> to the Dungeon actor</p>
+<div class="figure">
+<img src="../assets/images/ls_02.png" alt="Landscape Transformer Properties" />
+<p class="caption">Landscape Transformer Properties</p>
+</div>
+<h3 id="terrain-setup">Terrain Setup</h3>
+<p>Create a new terrain and center it on the dungeon (e.g. set the X and Z to -250).</p>
+<p>Also move the terrain down along Y by around -20 (an approx lowest point your dungeon layout might reach). This is needed because the height map doesn’t take negative values</p>
+<p>Select the terrain and go to settings and set the Control Texture Resolution</p>
+<div class="figure">
+<img src="../assets/images/terrain_res.png" alt="Increase Terrain texture resolution" />
+<p class="caption">Increase Terrain texture resolution</p>
+</div>
+<h3 id="properties-1">Properties</h3>
+<p><strong>Terrain</strong>: Assign the this terrain reference to the <strong>Terrain</strong> field in the above script properties</p>
+<p><strong>Textures:</strong> Assign textures to paint the terrain transformer script and the terrain would be painted based on the texture type</p>
+<div class="figure">
+<img src="../assets/images/ls_03.jpg" alt="Landscape Transformer Properties" />
+<p class="caption">Landscape Transformer Properties</p>
+</div>
+<p><strong>Ground Level Height</strong>: Set the default ground level height of the terrain</p>
+<p><strong>Layout Level Offset</strong>: If set to 0, the terrain would raise up to touch the layout of the dungeon. Sometimes you would like this value to be lower, if you already have a ground mesh like the image below</p>
+<div class="figure">
+<img src="../assets/images/ls_e11.jpg" alt="Landscape touches the layout ground" />
+<p class="caption">Landscape touches the layout ground</p>
+</div>
+<div class="figure">
+<img src="../assets/images/ls_e12.jpg" alt="Offset applied to move it down using LayoutLevelOffset" />
+<p class="caption">Offset applied to move it down using LayoutLevelOffset</p>
+</div>
+<p><strong>Room Elevation Curve:</strong> The curve defines the steepness of the landscape around the rooms</p>
+<p><strong>Corridor Elevation Curve:</strong> The curve defines the steepness of the landscape around the corridors</p>
+<p>Assign a preset curve if unassigned for the transformer to work properly</p>
+<div class="figure">
+<img src="../assets/images/curve.png" alt="Offset applied to move it down using LayoutLevelOffset" />
+<p class="caption">Offset applied to move it down using LayoutLevelOffset</p>
+</div>
+<p><strong>Smoothing Distance</strong>: The distance to perform the smoothing of the heights using the above curves</p>
+<p><strong>RoomBlurDistance / CorridorBlurDistance</strong>: A smooth pathway is painted on the landscape using blurring algorithms. These fields affect how the smooth corridor painting is performed along the rooms and corridors</p>
+<div class="figure">
+<img src="../assets/images/ls_path.jpg" alt="Corridor pathway texture" />
+<p class="caption">Corridor pathway texture</p>
+</div>
+<h1 id="marker-emitter-scripts">Marker Emitter Scripts</h1>
+<p>Marker Emitters are behavior scripts that lets you emit your own markers anywhere in the map</p>
+<div class="figure">
+<img src="../assets/images/da_design_me.png" alt="Architecture" />
+<p class="caption">Architecture</p>
+</div>
+<p>As seen previously, <em>Markers</em> are emitted by the Dungeon Builder class around the layout of the dungeon (e.g. Wall, Ground, Fence etc) and you can insert actors at that location from the Theme graph. You can even create your own markers emitted off of those parent markers, but without <em>Marker Emitters</em> you are restricted to the starting markers the dungeon builder has initially emitted for you</p>
+<p>Marker Emitters gives you a lot of flexibility and you can query the dungeon model and emit markers anywhere in the map</p>
+<p>A Marker Emitter is invoked right after the Dungeon Builder emits all the markers for the dungeon (Ground, Wall etc)</p>
+<h2 id="creating-a-marker-emitter">Creating a Marker Emitter</h2>
+<p>To create a Marker Emitter, you need to create a script inherited from <code>DungeonMarkerEmitter</code> under the <code>DungeonArchitect</code> namespace</p>
+<pre><code>using UnityEngine;
+using System.Collections;
+using DungeonArchitect;
+using DungeonArchitect.Utils;
+
+public class MyAwesomeEmitter : DungeonMarkerEmitter 
+{
+    public override void EmitMarkers(DungeonBuilder builder)
+    {
+        base.EmitMarkers(builder);
+
+        // Your emitter logic here
+
+        // Emit as many markers as you like. 
+        // Emit a marker like this:
+
+        // Fill up the marker data
+        var markerName = &quot;MyMarker&quot;;    // This name will be picked up in your theme file
+        var transform = Matrix4x4.TRS(position, rotation, scale);
+
+        // Additionaly specify the grid based meta data (optional)
+        var gridPosition = new IntVector(); // specify a position value here in grid coordinates
+        var cellId = -1;
+
+        builder.EmitMarker(markerName, transform, gridPosition, cellId);
+    }
+}
+</code></pre>
+<p>To attach a marker emitter to your Dungeon game object, simply add this script to the game object</p>
+<div class="figure">
+<img src="../assets/images/marker_emitter_01.png" alt="Marker Emitters attached to the Dungeon Game Object" />
+<p class="caption">Marker Emitters attached to the Dungeon Game Object</p>
+</div>
+<p>Explore the existing marker emitters that come with Dungeon Architect under <code>Assets/DungeonArchitect/Scripts/MarkerEmitters/Grid</code></p>
+<h2 id="example-1-2">Example #1</h2>
+<div class="figure">
+<img src="../assets/images/marker_emitter_02.jpg" alt="Trees spawned outside the dungeon layout" />
+<p class="caption">Trees spawned outside the dungeon layout</p>
+</div>
+<p>In this example, we’d like to decorate the area outside the dungeon layout that Dungeon Architect has created for us. Since DA creates marker points within the layout, we create a marker emitter to find nearby points in the empty space and emit markers named “EmptySpace_N” where N is 1, 2, 3, 4, 5 etc. These markers are then available to us in the themem file</p>
+<div class="figure">
+<img src="../assets/images/marker_emitter_03.jpg" alt="Theme to decorate the markers created by the emitter script" />
+<p class="caption">Theme to decorate the markers created by the emitter script</p>
+</div>
+<h2 id="example-2-2">Example #2</h2>
+<p>Sometimes, it’s useful to find the lowest point of the dungeon, so a large plane can be placed there (e.g. water plane, lava plane etc)</p>
+<p>The <code>MarkerEmitterFindLowestPoint</code> lets you do just that</p>
+<div class="figure">
+<img src="../assets/images/marker_emitter_04.jpg" alt="An acid plane created at the bottom of the dungeon" />
+<p class="caption">An acid plane created at the bottom of the dungeon</p>
+</div>
+<p>This emitter emits a marker named <code>LowestPoint</code>, at the lowest Y point of the dungeon with the appropriate scale, which we can decorate with any object in the theme file</p>
+<div class="figure">
+<img src="../assets/images/marker_emitter_05.png" alt="Node to attach a plane mesh to this marker" />
+<p class="caption">Node to attach a plane mesh to this marker</p>
+</div>
+<h2 id="example-3-2">Example #3</h2>
+<p>A marker emitter is created to add extra contextual markers to beautify a 2D level layout (can also be used with 3D)</p>
+<p>Check the marker named <code>MarkerEmitterCornerBeautifier</code></p>
+<div class="figure">
+<img src="../assets/images/me_eg3_1.jpg" alt="Simple layout with a red ground sprite" />
+<p class="caption">Simple layout with a red ground sprite</p>
+</div>
+<div class="figure">
+<img src="../assets/images/me_eg3_2.jpg" alt="Added decorated sprites with spatial contextual markers" />
+<p class="caption">Added decorated sprites with spatial contextual markers</p>
+</div>
+<div class="figure">
+<img src="../assets/images/me_eg3_3.jpg" alt="Theme to add the decorative sprites" />
+<p class="caption">Theme to add the decorative sprites</p>
+</div>
+<p>All the <code>Corner_*</code> markers seen in the theme file above were emitted by the marker emitter script</p>
+<h1 id="navigation-mesh">Navigation Mesh</h1>
+<p>Dungeon Architect supports runtime navigation mesh generation, which is not supported in Unity 5 yet. This is necessary for moving your NPCs intelligently across your procedurally generated level</p>
+<div class="figure">
+<img src="../assets/images/navigation_01.jpg" alt="Navigation" />
+<p class="caption">Navigation</p>
+</div>
+<p>This is based on the Recast Navigation library, so it provides very high quality results.</p>
+<h2 id="setup">Setup</h2>
+<p>To build a navigation mesh during runtime, place the DungeonNavigation prefab on to your scene</p>
+<div class="figure">
+<img src="../assets/images/navigation_02_v140.png" alt="Navigation Prefab" />
+<p class="caption">Navigation Prefab</p>
+</div>
+<p>Select the game object you just placed and have a look at the inspector window</p>
+<div class="figure">
+<img src="../assets/images/navigation_03.png" alt="Navigation Properties" />
+<p class="caption">Navigation Properties</p>
+</div>
+<p>To build the nav mesh, input geometry for walkable and blocked areas needs to be provided. This is done by <code>Triangle Providers</code></p>
+<p>There are two types of triangle providers already attached to the navigation object</p>
+<ul>
+<li><strong>Collision Triagle Provider</strong>: Uses the collision mesh of the colliders present in the scene to build the navigation mesh</li>
+<li><strong>Layout Floor Triangle Provider</strong>: This provides the floor layout of a dungeon as walkable area to the navigation mesh input</li>
+</ul>
+<p>Assign the dungeon reference you would like to use</p>
+<div class="figure">
+<img src="../assets/images/navigation_04.png" alt="Navigation Triangle Provider" />
+<p class="caption">Navigation Triangle Provider</p>
+</div>
+<p>Click Build</p>
+<div class="figure">
+<img src="../assets/images/navigation_05.png" alt="Navigation Properties" />
+<p class="caption">Navigation Properties</p>
+</div>
+<h2 id="theme-influence">Theme Influence</h2>
+<p>The dungeon objects (meshes, prefabs etc) do not affect the navigation by default. You need to set the <strong>Affects Navigation</strong> flag of the visual node to make it affect the navigation.</p>
+<div class="figure">
+<img src="../assets/images/navigation_08.png" alt="Influence Navigation from Theme Graph" />
+<p class="caption">Influence Navigation from Theme Graph</p>
+</div>
+<p>The object also has to be static in order to affect the navigation. So the <strong>Is Static</strong> flag also needs to be set.</p>
+<p>Important: You should set the <em>Affects Navigation</em> flag only when it is absolutly required to maintain a good nav mesh generation speed while building</p>
+<h2 id="config">Config</h2>
+<div class="figure">
+<img src="../assets/images/navigation_05.png" alt="Navigation Generation Config" />
+<p class="caption">Navigation Generation Config</p>
+</div>
+<ul>
+<li><strong>Cell Size</strong>: Controls the mesh generation accuracy vs speed. It determines the resolution of the generated nav mesh. Lowering this number will generate nicer edges and a more accurate navmesh but requires more procesing power and slower. A good value is between 0.2 to 0.3</li>
+<li><strong>Agent Height</strong>: The max height of the agents in your game</li>
+<li><strong>Agent Radius</strong>: The max radius of the agents in your game</li>
+<li><strong>Agent Climb Height</strong>: The max height an agent can climb on. Objects with height lower than this will not be considered obstacles, as the agent would be able to climb over them</li>
+<li><strong>Max Crowd Agents</strong>: The max no. of agents that can be present in the game at a time.</li>
+</ul>
+<h2 id="triangle-providers">Triangle Providers</h2>
+<p>To generate a navigation mesh, the nav mesh system requires input triangles so it can build a world and generate the nav mesh. Dungeon Architect comes with various triangle providers to help you affect the nav mesh in various ways. We have seen two of them already above</p>
+<div class="figure">
+<img src="../assets/images/navigation_06.png" alt="Navigation Mesh Triangle Providers" />
+<p class="caption">Navigation Mesh Triangle Providers</p>
+</div>
+<ul>
+<li><strong>StaticMeshTriangleProvider</strong>: Uses the mesh geometry (vertices, indices) for all the meshes defined in the prefab as a source for the input triangles to generate the nav mesh. This is usually slower but creates detailed results</li>
+<li><strong>CollisionTriangleProvider</strong>: Uses the colliders defined in the prefab as a source for the input triangles to generate the nav mesh. This is much faster than the StaticMesh triangle provider as it works with the low poly collision geoemtry. However it requires a collider to be present in the prefab to work</li>
+<li><strong>TerrainTriangleProvider</strong>: Feeds the terrain geometry into the nav mesh generation system. So you can have your dynamic navmesh build around terrains</li>
+<li><strong>LayoutFloorTriangleProvider</strong>: Feeds the layout of a dungeon to the nav mesh generation system. This is usually faster than providing a ground mesh in the CollisionTriangleProvider</li>
+</ul>
+<p>You can use multiple triangle providers at once. You can use only the CollisionTriangleProvider for better performance. However, you can increase the performance even further by disabling the gound mesh from affecting your navigation (because there will be lots of ground meshes) and providing that ground data from an additional LayoutFloorTriangleProvider script.</p>
+<h2 id="navigation-agent">Navigation Agent</h2>
+<p>Use the NavAgent to move your NPCs in the dynamic navigation mesh</p>
+<div class="figure">
+<img src="../assets/images/navigation_07.png" alt="Navigation Mesh Triangle Providers" />
+<p class="caption">Navigation Mesh Triangle Providers</p>
+</div>
+<p>An fully working example of this with AI is provided in the SurvivalShooter demo game bundled with Dungeon Architect</p>
+<div class="figure">
+<img src="../assets/images/nav_agent_01.png" alt="Sample NPCs with Navigation Agent behaviors" />
+<p class="caption">Sample NPCs with Navigation Agent behaviors</p>
+</div>
+<p>The nav mesh agent requies a CharacterController script to be present in the game object</p>
+<div class="figure">
+<img src="../assets/images/nav_agent_02.png" alt="Sample NPCs with Navigation Agent behaviors" />
+<p class="caption">Sample NPCs with Navigation Agent behaviors</p>
+</div>
+<pre><code>    var agent = GetComponent&lt;DungeonNavAgent&gt;();
+    
+    // Move the agent to the target position
+    agent.Destination = targetPosition;
+    
+    var velocity = agent.Velocity;  // Agents velocity
+    var direction = agent.Direction;    // Agents movement direction
+    var distanceToDestination = agent.GetRemainingDistance();
+    
+    // Stop moving the agent
+    agent.Stop();
+    
+    // Resume movement
+    agent.Resume();
+</code></pre>
+<p>Have a look at the shooter game demo in the samples folder for a complete example</p>
+<div class="figure">
+<img src="../assets/images/shooter_02_v110.png" alt="Shooter Game Demo in the Samples folder" />
+<p class="caption">Shooter Game Demo in the Samples folder</p>
+</div>
+<div class="figure">
+<img src="../assets/images/shooter_02.jpg" alt="Shooter Game Demo" />
+<p class="caption">Shooter Game Demo</p>
+</div>
+<div class="figure">
+<img src="../assets/images/survival_hill_01.jpg" alt="Shooter Game Demo" />
+<p class="caption">Shooter Game Demo</p>
+</div>
+<div class="figure">
+<img src="../assets/images/survival_hill_02.jpg" alt="Shooter Game Demo" />
+<p class="caption">Shooter Game Demo</p>
+</div>
+<h1 id="d-support">2D Support</h1>
+<p>Dungeon Architect fully supports 2D. You can use the same workflow to create beautiful 2D levels.</p>
+<div class="figure">
+<img src="../assets/images/2d_game.jpg" alt="2D Demo game" />
+<p class="caption">2D Demo game</p>
+</div>
+<p>A sample 2D game comes along with Dungeon Architect to help you get started. It demos dynamic 2D procedural level generation, dynamic 2D navigation mesh generation, 2D AI with patrol, seek and search behaviours</p>
+<div class="figure">
+<img src="../assets/images/2d_theme.jpg" alt="Theme with 2D Sprites" />
+<p class="caption">Theme with 2D Sprites</p>
+</div>
+<p>2D dynamic navigation mesh generation is also support.</p>
+<div class="figure">
+<img src="../assets/images/2d_navmesh.png" alt="2D Demo game" />
+<p class="caption">2D Demo game</p>
+</div>
+<h1 id="dungeon-builders">Dungeon Builders</h1>
+<p>The Default dungeon builder used to create the layout is swappable and you can provide your own implementation</p>
+<div class="figure">
+<img src="../assets/images/da_design_builder.png" alt="The Dungeon Builder can be swapped with your own implementation" />
+<p class="caption">The Dungeon Builder can be swapped with your own implementation</p>
+</div>
+<p>This is useful if you want to use your own algorithm for generating the layout of your dungeons.</p>
+<p>You are not limited to a grid based system.</p>
+<h2 id="creating-a-new-builder">Creating a new Builder</h2>
+<p>To create a new builder, subclass <code>DungeonBuilder</code> under the <code>DungeonArchitect</code> namespace and implement the virtual methods</p>
+<pre><code>using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using DungeonArchitect.Utils;
+
+[ExecuteInEditMode]
+public class MyDungeonBuilder : DungeonBuilder
+{
+
+    public override void BuildDungeon(DungeonConfig config, DungeonModel model) {
+        base.BuildDungeon(config, model);
+
+        // Add your builder logic here
+    }
+
+
+    public override void EmitMarkers() {
+        base.EmitMarkers();
+
+        // Emit markers here by calling EmitMarker()
+    }
+}
+</code></pre>
+<p>Have a look at <code>GridDungeonBuilder</code> under <code>Assets/DungeonArchitect/Scripts/Builders/GridDungeonBuilder.cs</code> for reference</p>
+<h2 id="using-a-different-builder">Using a different Builder</h2>
+<p>If you’ve created a builder and would like to use it with your dungeon actor, drop in an existing dungeon actor, remove the existing builder script and replace it with your own</p>
+<div class="figure">
+<img src="../assets/images/dungeon_builder.png" alt="Dungeon builder script attached to the Dungeon game object" />
+<p class="caption">Dungeon builder script attached to the Dungeon game object</p>
+</div>
+<h2 id="example-builders">Example Builders</h2>
+<p>Dungeon Architect comes with a sample builder named SimpleCity. It could be used as a good reference for building your own builders</p>
+<div class="figure">
+<img src="../assets/images/builder_example_path.png" alt="Builder Code Location" />
+<p class="caption">Builder Code Location</p>
+</div>
+<div class="figure">
+<img src="../assets/images/builder_example_path2.png" alt="Builder Samples Location" />
+<p class="caption">Builder Samples Location</p>
+</div>
+<div class="figure">
+<img src="../assets/images/builder_simple_city_04.jpg" alt="Sample City Builder" />
+<p class="caption">Sample City Builder</p>
+</div>
+<div class="figure">
+<img src="../assets/images/builder_simple_city_01.jpg" alt="Sample City Builder" />
+<p class="caption">Sample City Builder</p>
+</div>
+<p>There are also examples on how this sample builder can be further extended by the users using Marker Emitters script. It is used emit markers around the boundary of the city, so theme files can decorate them as strongholds</p>
+<div class="figure">
+<img src="../assets/images/builder_simple_city_03.jpg" alt="Stronghold Wall Emitter" />
+<p class="caption">Stronghold Wall Emitter</p>
+</div>
+<div class="figure">
+<img src="../assets/images/builder_simple_city_02.jpg" alt="Stronghold Wall Emitter" />
+<p class="caption">Stronghold Wall Emitter</p>
+</div>
+<div id="footer">
+  &copy; 2015 <a href="http://coderespawn.com/">Code Respawn Technologies Pvt Ltd</a>
+</div>
+
+</div>
+
+</div>
+</body>
+</html>
