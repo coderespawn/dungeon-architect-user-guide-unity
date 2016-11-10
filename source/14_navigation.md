@@ -11,7 +11,7 @@ Setup
 -----
 To build a navigation mesh during runtime, place the DungeonNavigation prefab on to your scene
 
-![Navigation Prefab](../assets/images/navigation_02_v110.png)
+![Navigation Prefab](../assets/images/navigation_02_v140.png)
 
 Select the game object you just placed and have a look at the inspector window
 

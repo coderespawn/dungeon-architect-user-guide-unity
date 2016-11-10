@@ -1,8 +1,8 @@
 Dungeon Prefab
 ==============
-A dungeon prefab is used to build your dungeons.   Drop the dungeon prefab into the scene and reset it's transform
+A dungeon prefab is used to build your dungeons.   Dungeon Architect supports building dungeons with different layouts.  The current supported ones are Grid, SimpleCity and Floorplan.   Drop the appropriate dungeon prefab into the scene and reset its transform
 
-![Dungeon Prefab](../assets/images/dungeon_prefab.png)
+![Dungeon Prefab](../assets/images/dungeon_prefab_v140.png)
 
 The dungeon game object generate a procedural layout for your dungeon based on the various configuration paramters.  
 After the layout has been generated, it spawns meshes, lights, blueprints etc, based on the mappings you have defined in the Theme file.   This way you can define what meshes needs to be attached to the floors, walls, ceilings, etc

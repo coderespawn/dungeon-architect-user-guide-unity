@@ -90,3 +90,14 @@ Select the negation volume and have a look at it's properties
 **Dungeon**: Set the dungeon game object this volume should affect
 
 A button to rebuild the dungeon is provided for convenience.  It rebuilds the dungeon in the scene
+
+
+Marker Replacement Volume
+-------------------------
+
+A marker replacement volume replaces marker in the dungeon with your own supplied markers.  This is useful if say, you want to replace a wall with a door.  You would add a mapping that would replace all the "Wall" markers with "Door" markers. Since this is executed before the theming is applied, this gives you a lot of low level control
+
+Check the video for instructions on how to use it
+
+YOUTUBE(aqc0HsaKOpM)
+
